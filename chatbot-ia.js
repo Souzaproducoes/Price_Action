@@ -14,7 +14,7 @@
 // ══════════════════════════════════════════════════════════════════
 
 // ── Cole aqui a URL do seu projeto no Vercel após o deploy ──
-const VERCEL_API_URL = 'https://SEU-PROJETO.vercel.app/api/chat';
+const VERCEL_API_URL = 'https://price-action-n7kr6kab8-stelino-paulo-de-souza-filho-s-projects.vercel.app/api/chat';
 
 // ── SYSTEM PROMPT ──
 const SYSTEM_PROMPT = `Você é a Isia, AI Agent educacional da Souza Produções.
