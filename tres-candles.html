@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Padrão dos 3 Candles | Price Action Academy | Souza Produções</title>
+  <meta name="description" content="Aprenda o Padrão dos 3 Candles: Alvo, Sweep e Negação de Liquidez — na perspectiva do Smart Money. Price Action Academy by Souza Produções." />
+
+  <!-- ── FONTS ── mesmas usadas no site principal ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════
+       DESIGN SYSTEM — espelha o Price Action Academy
+       ═══════════════════════════════════════════════ */
+    :root {
+      --bg:          #0d0f14;
+      --bg2:         #12151c;
+      --bg3:         #181c26;
+      --card:        #1a1e2a;
+      --card2:       #1f2435;
+      --border:      #252b3b;
+      --border2:     #2e3548;
+
+      --gold:        #f5c518;
+      --gold2:       #e0a800;
+      --gold-glow:   rgba(245,197,24,0.15);
+      --gold-dim:    rgba(245,197,24,0.08);
+
+      --cyan:        #00d4ff;
+      --cyan-dim:    rgba(0,212,255,0.10);
+      --sweep-color: #a78bfa;
+      --sweep-dim:   rgba(167,139,250,0.10);
+
+      --bull:        #22c55e;
+      --bull-dim:    rgba(34,197,94,0.10);
+      --bear:        #ef4444;
+      --bear-dim:    rgba(239,68,68,0.10);
+
+      --text:        #d1d5e8;
+      --text2:       #8892aa;
+      --text3:       #4a5268;
+
+      --font-head:   'Rajdhani', sans-serif;
+      --font-body:   'Exo 2', sans-serif;
+      --font-mono:   'Share Tech Mono', monospace;
+
+      --nav-h:       64px;
+      --radius:      4px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .announce-bar {
+      background: linear-gradient(90deg, #1a1400, #2a1f00, #1a1400);
+      border-bottom: 1px solid var(--gold-dim);
+      padding: 8px 20px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--gold2);
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .announce-bar .inner {
+      display: inline-flex;
+      gap: 40px;
+      animation: ticker 40s linear infinite;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .announce-bar .sep { color: var(--text3); }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(13,15,20,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 0;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+      margin-right: 28px;
+    }
+
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .nav-logo-text span:first-child {
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo-text span:last-child {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+      list-style: none;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 8px 14px;
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text2);
+      text-decoration: none;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      transition: color .2s, background .2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { color: #fff; background: var(--bg3); }
+    .nav-links a.active { color: var(--gold); }
+
+    .nav-links .badge {
+      display: inline-block;
+      font-size: 9px;
+      font-family: var(--font-mono);
+      background: var(--gold-dim);
+      color: var(--gold);
+      border: 1px solid rgba(245,197,24,0.3);
+      border-radius: 2px;
+      padding: 1px 5px;
+      margin-left: 5px;
+      vertical-align: middle;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-social {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .nav-social a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text3);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color .2s;
+    }
+
+    .nav-social a:hover { color: var(--gold); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      padding: 14px 40px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text3);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .breadcrumb a { color: var(--text3); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb .sep { color: var(--border2); }
+    .breadcrumb .current { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 72px 40px 64px;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(245,197,24,0.04), transparent),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,212,255,0.03), transparent);
+      pointer-events: none;
+    }
+
+    /* grid lines background */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.03em;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-family: var(--font-head);
+      font-size: clamp(18px, 2.5vw, 26px);
+      font-weight: 500;
+      color: var(--cyan);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      max-width: 600px;
+      font-size: 15px;
+      color: var(--text2);
+      line-height: 1.8;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      padding: 4px 12px;
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      color: var(--text3);
+      text-transform: uppercase;
+    }
+
+    /* ── LAYOUT ── */
+    .content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 64px 40px 100px;
+    }
+
+    /* ── SECTION HEADING ── */
+    .sec-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--text3);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .sec-title {
+      font-family: var(--font-head);
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .sec-title span { color: var(--gold); }
+
+    section { margin-bottom: 80px; }
+
+    p.body { font-size: 15px; color: var(--text2); line-height: 1.8; }
+
+    /* ── CONCEPT BOX ── */
+    .concept-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--cyan);
+      padding: 24px 28px;
+      margin: 28px 0;
+      position: relative;
+    }
+
+    .concept-box::before {
+      content: 'CONCEITO';
+      position: absolute;
+      top: -9px;
+      left: 20px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+      background: var(--card);
+      padding: 0 8px;
+    }
+
+    .concept-box p {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── MAIN CHART ── */
+    .chart-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 20px 20px;
+      margin: 32px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+    }
+
+    .chart-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--text3);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    canvas { display: block; width: 100%; height: auto; position: relative; z-index: 1; }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 14px;
+      padding-left: 4px;
+    }
+
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text3);
+    }
+
+    .leg-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+
+    /* ── THREE STEPS ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      margin: 28px 0;
+    }
+
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px 20px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, background .25s;
+    }
+
+    .step-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+
+    .step-card:hover::after,
+    .step-card.open::after { transform: scaleX(1); }
+
+    .step-1::after { background: var(--gold); }
+    .step-2::after { background: var(--sweep-color); }
+    .step-3::after { background: var(--bull); }
+
+    .step-card:hover,
+    .step-card.open {
+      background: var(--card2);
+      border-color: var(--border2);
+    }
+
+    .step-num-bg {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-family: var(--font-head);
+      font-size: 72px;
+      font-weight: 700;
+      opacity: 0.04;
+      color: #fff;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .step-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .step-1 .step-icon-wrap { background: rgba(245,197,24,0.1); border: 1px solid rgba(245,197,24,0.25); }
+    .step-2 .step-icon-wrap { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); }
+    .step-3 .step-icon-wrap { background: rgba(34,197,94,0.1);   border: 1px solid rgba(34,197,94,0.25); }
+
+    .step-card h3 {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .step-1 h3 { color: var(--gold); }
+    .step-2 h3 { color: var(--sweep-color); }
+    .step-3 h3 { color: var(--bull); }
+
+    .step-card .step-title {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.03em;
+      margin-bottom: 10px;
+    }
+
+    .step-card p {
+      font-size: 13px;
+      color: var(--text3);
+      line-height: 1.6;
+    }
+
+    /* expandable detail */
+    .step-detail {
+      display: none;
+      grid-column: 1 / -1;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-top: 2px solid var(--gold-dim);
+      padding: 28px 32px;
+      animation: slideDown .25s ease;
+    }
+
+    .step-detail.open { display: block; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .step-detail p {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.85;
+      max-width: 760px;
+    }
+
+    .step-detail p strong { color: var(--text); font-weight: 600; }
+
+    /* ── DEMO SIMULATOR ── */
+    .sim-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 28px;
+      margin: 28px 0;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .sim-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .sim-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .sim-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 7px 16px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--text3);
+      cursor: pointer;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      transition: all .2s;
+    }
+
+    .sim-btn:hover { border-color: var(--text3); color: var(--text); }
+    .sim-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+    /* ── DUAL TABLE ── */
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin: 28px 0;
+    }
+
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 22px;
+    }
+
+    .table-card-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bull-lbl { color: var(--bull); }
+    .bear-lbl { color: var(--bear); }
+
+    .table-card ul { list-style: none; }
+
+    .table-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text3);
+      line-height: 1.5;
+    }
+
+    .table-card li:last-child { border-bottom: none; }
+
+    .li-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ── CHECKLIST ── */
+    .checklist-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 28px;
+      margin: 28px 0;
+    }
+
+    .checklist-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .ck-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ck-item:last-child { border-bottom: none; }
+
+    .ck-box {
+      width: 17px;
+      height: 17px;
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      transition: all .2s;
+    }
+
+    .ck-item.checked .ck-box {
+      background: var(--bull);
+      border-color: var(--bull);
+      color: #000;
+    }
+
+    .ck-item p {
+      font-size: 13px;
+      color: var(--text3);
+      line-height: 1.55;
+      transition: color .2s;
+    }
+
+    .ck-item.checked p { color: var(--text); }
+
+    .score-bar-wrap { margin-top: 18px; }
+
+    .score-bar {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .score-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--bull), var(--gold));
+      border-radius: 2px;
+      transition: width .4s ease;
+    }
+
+    .score-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text3);
+    }
+
+    #scoreQual { transition: color .3s; }
+
+    /* ── WARNING / ERROR BOX ── */
+    .warning-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin: 28px 0;
+    }
+
+    .warn-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 22px;
+    }
+
+    .warn-card h4 {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .warn-card.err h4 { color: var(--bear); }
+    .warn-card.ok  h4 { color: var(--bull); }
+
+    .warn-card ul { list-style: none; }
+
+    .warn-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text3);
+      line-height: 1.5;
+    }
+
+    .warn-card li:last-child { border-bottom: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .footer-logo img { height: 32px; }
+
+    .footer-logo span {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text3);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .footer-copy strong { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .steps-grid   { grid-template-columns: 1fr; }
+      .dual-grid    { grid-template-columns: 1fr; }
+      .warning-grid { grid-template-columns: 1fr; }
+      .hero { padding: 48px 20px 40px; }
+      .content { padding: 40px 20px 80px; }
+      .breadcrumb { padding: 12px 20px; }
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+    }
+
+    /* ── FADE-IN ON SCROLL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── ANNOUNCE BAR ── -->
+<div class="announce-bar">
+  <span class="inner">
+    <span>🎓 NOVO: Conteúdo modular — 5 módulos independentes: Candlesticks, WINFUT, ICT, Alinhamento de Fluxo e Smart Money!</span>
+    <span class="sep">·</span>
+    <span>📱 Siga nas redes!</span>
+    <span class="sep">·</span>
+    <span>🎓 NOVO: Conteúdo modular — 5 módulos independentes: Candlesticks, WINFUT, ICT, Alinhamento de Fluxo e Smart Money!</span>
+    <span class="sep">·</span>
+    <span>📱 Siga nas redes!</span>
+  </span>
+</div>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <a href="https://souzaproducoes.github.io/Price_Action" class="nav-logo">
+    <img src="https://souzaproducoes.github.io/Price_Action/logo-souza.png"
+         alt="Souza Produções"
+         onerror="this.style.display='none'" />
+    <div class="nav-logo-text">
+      <span>Souza Produções</span>
+      <span>Price Action Academy</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="https://souzaproducoes.github.io/Price_Action#candlesticks">Candlesticks</a></li>
+    <li><a href="https://souzaproducoes.github.io/Price_Action#winfut">WINFUT</a></li>
+    <li><a href="https://souzaproducoes.github.io/Price_Action#ict">ICT Metodologia <span class="badge">ICT</span></a></li>
+    <li><a href="https://souzaproducoes.github.io/Price_Action#fluxo">Alinhamento de Fluxo</a></li>
+    <li><a href="https://souzaproducoes.github.io/Price_Action#smc" class="active">Smart Money <span class="badge">SMC</span></a></li>
+  </ul>
+
+  <div class="nav-social">
+    <a href="https://www.instagram.com/souza.producoes.2012" target="_blank">Instagram</a>
+    <a href="https://www.facebook.com/Souza.Producoes.2012" target="_blank">Facebook</a>
+    <a href="https://www.youtube.com/@vfshomevideo" target="_blank">YouTube</a>
+  </div>
+</nav>
+
+<!-- ── BREADCRUMB ── -->
+<div class="breadcrumb">
+  <a href="https://souzaproducoes.github.io/Price_Action">Início</a>
+  <span class="sep">/</span>
+  <a href="#">Smart Money · SMC</a>
+  <span class="sep">/</span>
+  <span class="current">Padrão dos 3 Candles</span>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Smart Money Concepts · Price Action</div>
+    <h1>Padrão dos <em>3 Candles</em></h1>
+    <div class="hero-sub">Negação de Liquidez — Alvo · Sweep · Reversão</div>
+    <p>
+      Como o mercado monta a armadilha, varre os stops e inicia o movimento real na direção do Smart Money.
+      Entenda o ciclo completo de liquidez e pare de ser a presa.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">Smart Money</span>
+      <span class="hero-tag">Liquidity Sweep</span>
+      <span class="hero-tag">Stop Hunt</span>
+      <span class="hero-tag">Price Action</span>
+      <span class="hero-tag">WIN / WDO</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="content">
+
+  <!-- 01 CONCEITO -->
+  <section class="reveal">
+    <div class="sec-label">// 01 — conceito central</div>
+    <h2 class="sec-title">O que é a <span>Negação de Liquidez?</span></h2>
+
+    <p class="body">
+      Antes que qualquer movimento relevante aconteça, o Smart Money — bancos, mesas proprietárias e fundos institucionais —
+      precisa de liquidez para executar posições de alto volume. Essa liquidez está onde os traders de varejo colocam seus stops:
+      exatamente acima de topos visíveis e abaixo de fundos óbvios.
+      O <strong>Padrão dos 3 Candles</strong> é a expressão gráfica desse processo de armadilha, coleta e reversão.
+    </p>
+
+    <div class="concept-box">
+      <p>
+        "Todo movimento forte começa com uma <strong>armadilha</strong>. O preço invade um nível óbvio para ativar ordens
+        paradas — stops de vendidos, buy stops, ordens de breakout — e só então reverte com força na direção real.
+        Quem reconhece o padrão entra <em>com</em> o Smart Money, não contra ele."
+      </p>
+    </div>
+
+    <p class="body">
+      O padrão funciona em qualquer ativo e timeframe, mas é especialmente poderoso nos futuros brasileiros
+      (WIN, WDO, BRA50) onde a liquidez se concentra em níveis técnicos muito respeitados pela comunidade de varejo,
+      criando pools previsíveis para os operadores institucionais.
+    </p>
+  </section>
+
+  <!-- 02 GRÁFICO PRINCIPAL -->
+  <section class="reveal">
+    <div class="sec-label">// 02 — anatomia gráfica</div>
+    <h2 class="sec-title">Visualização do <span>Padrão</span></h2>
+    <p class="body">O gráfico abaixo ilustra o padrão bearish completo — como o preço cria o alvo, varre a liquidez e reverte.</p>
+
+    <div class="chart-panel">
+      <div class="chart-label">// BRA50 — padrão bearish de negação de liquidez (diagrama didático)</div>
+      <canvas id="mainChart" width="920" height="400"></canvas>
+      <div class="chart-legend">
+        <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div> Candle Alvo</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--sweep-color)"></div> Candle Teste / Sweep</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--bear)"></div> Candle Negação / Reversão</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#3a4258"></div> Candles de contexto</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 OS 3 CANDLES -->
+  <section class="reveal">
+    <div class="sec-label">// 03 — os três candles</div>
+    <h2 class="sec-title">Passo a <span>Passo</span></h2>
+    <p class="body">Clique em cada candle para expandir a explicação completa.</p>
+
+    <div class="steps-grid" id="stepsGrid">
+
+      <div class="step-card step-1" data-detail="d1">
+        <div class="step-num-bg">1</div>
+        <div class="step-icon-wrap">🎯</div>
+        <h3>Candle 01</h3>
+        <div class="step-title">O Alvo</div>
+        <p>Forma um topo ou fundo claro onde a liquidez se acumula — o pool que o Smart Money vai buscar.</p>
+      </div>
+
+      <div class="step-card step-2" data-detail="d2">
+        <div class="step-num-bg">2</div>
+        <div class="step-icon-wrap">⚡</div>
+        <h3>Candle 02</h3>
+        <div class="step-title">O Teste / Sweep</div>
+        <p>Invade a zona, ativa stops e ordens de breakout. A liquidez é coletada. A armadilha fecha.</p>
+      </div>
+
+      <div class="step-card step-3" data-detail="d3">
+        <div class="step-num-bg">3</div>
+        <div class="step-icon-wrap">↩</div>
+        <h3>Candle 03</h3>
+        <div class="step-title">A Negação</div>
+        <p>Fecha com força na direção oposta. Confirma a rejeição. É o sinal de entrada para o operador atento.</p>
+      </div>
+
+      <!-- Details (inserted inline) -->
+      <div class="step-detail" id="d1">
+        <div class="detail-tag">01 · Candle Alvo — O Pool de Liquidez</div>
+        <p>
+          O primeiro candle estabelece uma <strong>referência de preço clara e visível</strong>: um máximo de swing (bearish)
+          ou mínimo de swing (bullish). Esse nível não é aleatório — é exatamente onde traders de varejo posicionam
+          seus stops de proteção acima de topos e ordens de compra nos rompimentos.
+          Em termos de Smart Money, isso é um <strong>pool de liquidez</strong>: uma concentração previsível de ordens
+          que operadores institucionais precisam para executar volumes que o mercado normal não suportaria silenciosamente.
+          Quanto mais óbvio e respeitado o nível — topo de swing anterior, equal highs, resistência histórica —
+          maior o pool e maior a atratividade para os grandes players.
+        </p>
+      </div>
+
+      <div class="step-detail" id="d2">
+        <div class="detail-tag">02 · Candle Teste — O Liquidity Sweep</div>
+        <p>
+          O segundo candle executa a <strong>varredura de liquidez (liquidity sweep)</strong>.
+          O preço se estende além do nível do candle alvo — rompendo o topo (bearish) ou o fundo (bullish) —
+          ativando os stops acumulados e atraindo entradas de breakout dos traders de varejo.
+          O sinal mais importante: esse candle <strong>fecha de volta dentro da estrutura anterior</strong>,
+          ou deixa uma sombra longa de rejeição apontando para a zona varrida.
+          A invasão foi deliberada. O Smart Money usou a demanda gerada pelo breakout falso para distribuir
+          (vender em massa no bearish) ou acumular (comprar em massa no bullish) com preço favorável.
+          Traders de varejo agora estão posicionados errado — presos na armadilha.
+        </p>
+      </div>
+
+      <div class="step-detail" id="d3">
+        <div class="detail-tag">03 · Candle Negação — A Confirmação da Reversão</div>
+        <p>
+          O terceiro candle é a <strong>confirmação direcional</strong>.
+          Ele fecha com convicção na direção oposta ao sweep — frequentemente como um engolfo, um pin bar forte
+          ou uma vela impulsiva com corpo expressivo e pouca sombra no sentido da entrada.
+          Esse fechamento confirma que o Smart Money absorveu toda a liquidez disponível e agora empurra o preço
+          em sua direção de interesse real. Para o operador, este é o candle de <strong>entrada</strong>:
+          entrada no fechamento ou no reteste da zona, stop além da sombra do candle de sweep,
+          alvo no próximo pool de liquidez oposto ou FVG relevante.
+          O risco é bem delimitado — a recompensa, tipicamente 1:3 ou mais.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 04 SIMULADOR -->
+  <section class="reveal">
+    <div class="sec-label">// 04 — simulador interativo</div>
+    <h2 class="sec-title">Visualização <span>Bearish vs Bullish</span></h2>
+    <p class="body">Alterne entre os dois tipos de padrão e observe como a estrutura dos 3 candles se forma em cada cenário.</p>
+
+    <div class="sim-panel">
+      <div class="sim-header">
+        <div class="sim-title">// simulador — padrão de 3 candles</div>
+        <div class="sim-btns">
+          <button class="sim-btn active" id="btnBear" onclick="renderSim('bear')">↓ Bearish</button>
+          <button class="sim-btn" id="btnBull" onclick="renderSim('bull')">↑ Bullish</button>
+        </div>
+      </div>
+      <canvas id="simChart" width="860" height="320"></canvas>
+    </div>
+  </section>
+
+  <!-- 05 BULLISH VS BEARISH -->
+  <section class="reveal">
+    <div class="sec-label">// 05 — variações do padrão</div>
+    <h2 class="sec-title">Bearish <span>vs</span> Bullish</h2>
+
+    <div class="dual-grid">
+      <div class="table-card">
+        <div class="table-card-label bull-lbl">↑ Padrão Bullish</div>
+        <ul>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Alvo cria fundo claro (mínimo de swing)</li>
+          <li><span class="li-dot" style="background:var(--sweep-color)"></span> Sweep rompe <em>abaixo</em> do fundo, ativa stops de compra</li>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Negação fecha <strong>acima do corpo do alvo</strong></li>
+          <li><span class="li-dot" style="background:var(--gold)"></span> Entry: fechamento do candle 3 ou reteste da zona</li>
+          <li><span class="li-dot" style="background:var(--gold)"></span> Stop: abaixo da sombra do candle de sweep</li>
+          <li><span class="li-dot" style="background:var(--cyan)"></span> Alvo: próximo FVG ou pool de liquidez acima</li>
+        </ul>
+      </div>
+      <div class="table-card">
+        <div class="table-card-label bear-lbl">↓ Padrão Bearish</div>
+        <ul>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Alvo cria topo claro (máximo de swing)</li>
+          <li><span class="li-dot" style="background:var(--sweep-color)"></span> Sweep rompe <em>acima</em> do topo, ativa stops de venda</li>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Negação fecha <strong>abaixo do corpo do alvo</strong></li>
+          <li><span class="li-dot" style="background:var(--gold)"></span> Entry: fechamento do candle 3 ou reteste da zona</li>
+          <li><span class="li-dot" style="background:var(--gold)"></span> Stop: acima da sombra do candle de sweep</li>
+          <li><span class="li-dot" style="background:var(--cyan)"></span> Alvo: próximo FVG ou pool de liquidez abaixo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 CHECKLIST -->
+  <section class="reveal">
+    <div class="sec-label">// 06 — validação do setup</div>
+    <h2 class="sec-title">Checklist de <span>Confluência</span></h2>
+    <p class="body">Marque os critérios identificados. Quanto mais itens confirmados, maior a probabilidade de sucesso do padrão.</p>
+
+    <div class="checklist-wrap">
+      <div class="checklist-title">// filtros de qualidade — padrão dos 3 candles</div>
+
+      <div class="ck-item" onclick="ckToggle(this)">
+        <div class="ck-box"></div>
+        <p>O Candle Alvo é um topo/fundo de swing externo — não um nível interno da estrutura</p>
+      </div>
+      <div class="ck-item" onclick="ckToggle(this)">
+        <div class="ck-box"></div>
+        <p>O Candle Sweep fechou de volta dentro da estrutura ou deixou sombra de rejeição expressiva</p>
+      </div>
+      <div class="ck-item" onclick="ckToggle(this)">
+        <div class="ck-box"></div>
+        <p>O Candle Negação fechou com corpo direcional forte — sem sombra significativa no sentido da entrada</p>
+      </div>
+      <div class="ck-item" onclick="ckToggle(this)">
+        <div class="ck-box"></div>
+        <p>O padrão ocorre em zona de confluência: Order Block, Fair Value Gap, OTE de Fibonacci ou Supply/Demand</p>
+      </div>
+      <div class="ck-item" onclick="ckToggle(this)">
+        <div class="ck-box"></div>
+        <p>A direção do padrão está alinhada com o bias do timeframe superior (HTF)</p>
+      </div>
+      <div class="ck-item" onclick="ckToggle(this)">
+        <div class="ck-box"></div>
+        <p>Existe espaço para o trade — próxima zona de liquidez oferece mínimo 1:2 R:R</p>
+      </div>
+      <div class="ck-item" onclick="ckToggle(this)">
+        <div class="ck-box"></div>
+        <p>Volume ou momentum expandiu no candle de negação (confirmação de força direcional)</p>
+      </div>
+
+      <div class="score-bar-wrap">
+        <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
+        <div class="score-meta">
+          <span id="scoreText">0 / 7 critérios confirmados</span>
+          <span id="scoreQual">—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 ERROS -->
+  <section class="reveal">
+    <div class="sec-label">// 07 — erros e melhores práticas</div>
+    <h2 class="sec-title">O que <span>Evitar</span></h2>
+
+    <div class="warning-grid">
+      <div class="warn-card err">
+        <h4>✗ Erros Frequentes</h4>
+        <ul>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Entrar antes do candle de negação fechar</li>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Operar contra o bias do timeframe superior</li>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Confundir breakout genuíno com sweep</li>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Stop abaixo do corpo — deve ser abaixo da sombra do sweep</li>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Operar o padrão em zonas internas irrelevantes</li>
+          <li><span class="li-dot" style="background:var(--bear)"></span> Ignorar o contexto macro e sessões do mercado</li>
+        </ul>
+      </div>
+      <div class="warn-card ok">
+        <h4>✓ Melhores Práticas</h4>
+        <ul>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Esperar o <em>fechamento</em> do candle de negação</li>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Confirmar bias em pelo menos um TF superior</li>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Empilhar confluências: FVG + OB + padrão de 3 candles</li>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Risco máximo de 1–2% do capital por operação</li>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Alvos em zonas de liquidez opostas ou FVGs identificados</li>
+          <li><span class="li-dot" style="background:var(--bull)"></span> Operar nas janelas de liquidez do WIN/WDO (abertura e Londres)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /content -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="https://souzaproducoes.github.io/Price_Action" class="footer-logo">
+    <img src="https://souzaproducoes.github.io/Price_Action/logo-souza.png"
+         alt="Souza Produções"
+         onerror="this.style.display='none'" />
+    <span>Souza Produções</span>
+  </a>
+
+  <ul class="footer-links">
+    <li><a href="https://souzaproducoes.github.io/Price_Action">Início</a></li>
+    <li><a href="https://www.instagram.com/souza.producoes.2012" target="_blank">Instagram</a></li>
+    <li><a href="https://www.facebook.com/Souza.Producoes.2012" target="_blank">Facebook</a></li>
+    <li><a href="https://www.youtube.com/@vfshomevideo" target="_blank">YouTube</a></li>
+  </ul>
+
+  <div class="footer-copy">
+    <strong>Price Action Academy</strong> · Souza Produções © 2025<br>
+    Material educacional — não constitui recomendação de investimento.
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════════════
+     SCRIPTS
+     ════════════════════════════════════════════════ -->
+<script>
+/* ── UTILS ── */
+const $ = id => document.getElementById(id);
+const C = (id, w, h) => {
+  const cv = $(id), ctx = cv.getContext('2d');
+  cv.width = w; cv.height = h;
+  return { cv, ctx, W: w, H: h };
+};
+
+const PAL = {
+  bg:     '#12151c',
+  grid:   '#1e2330',
+  border: '#252b3b',
+  gold:   '#f5c518',
+  sweep:  '#a78bfa',
+  bull:   '#22c55e',
+  bear:   '#ef4444',
+  gray:   '#3a4258',
+  text:   '#4a5268',
+  cyan:   '#00d4ff',
+};
+
+function drawWick(ctx, x, h, l, color) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(x, h);
+  ctx.lineTo(x, l);
+  ctx.stroke();
+}
+
+function drawBody(ctx, x, o, c, color, w) {
+  const top = Math.min(o, c), bot = Math.max(o, c), ht = Math.max(bot - top, 2);
+  ctx.fillStyle = color;
+  ctx.fillRect(x - w/2, top, w, ht);
+  // subtle outline
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 0.5;
+  ctx.strokeRect(x - w/2, top, w, ht);
+}
+
+function candle(ctx, x, o, c, h, l, color, w = 28) {
+  drawWick(ctx, x, h, l, color);
+  drawBody(ctx, x, o, c, color, w);
+}
+
+function hline(ctx, y, color, dash = [], W) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1;
+  ctx.setLineDash(dash);
+  ctx.beginPath();
+  ctx.moveTo(52, y);
+  ctx.lineTo(W - 12, y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function badge(ctx, text, x, y, bg, fg = '#000') {
+  ctx.font = "bold 10px 'Share Tech Mono', monospace";
+  const tw = ctx.measureText(text).width;
+  const pw = tw + 16, ph = 20;
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  ctx.roundRect(x - pw/2, y - ph/2, pw, ph, 2);
+  ctx.fill();
+  ctx.fillStyle = fg;
+  ctx.textAlign = 'center';
+  ctx.fillText(text, x, y + 4);
+}
+
+function label(ctx, text, x, y, color, size = 10, align = 'left') {
+  ctx.font = `${size}px 'Share Tech Mono', monospace`;
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.fillText(text, x, y);
+}
+
+function grid(ctx, W, H) {
+  ctx.strokeStyle = PAL.grid;
+  ctx.lineWidth = 1;
+  for (let y = 40; y < H - 20; y += 50) {
+    ctx.beginPath(); ctx.moveTo(52, y); ctx.lineTo(W - 12, y); ctx.stroke();
+  }
+}
+
+/* ══════════════════════════════════
+   MAIN CHART — bearish diagram
+   ══════════════════════════════════ */
+(function drawMain() {
+  const { ctx, W, H } = C('mainChart', 920, 400);
+
+  // bg
+  ctx.fillStyle = PAL.bg;
+  ctx.fillRect(0, 0, W, H);
+  grid(ctx, W, H);
+
+  // Y-axis price labels (decorative)
+  [80, 130, 180, 230, 280, 330].forEach(y => {
+    const price = Math.round(130000 - (y - 80) * 200);
+    label(ctx, price.toLocaleString('pt-BR'), 48, y + 4, PAL.text, 9, 'right');
+  });
+
+  // candle data [x, open, close, high, low]
+  // (Y is canvas coords: lower = higher price)
+  const cds = [
+    [80,  210, 195, 200, 220],  // context bull
+    [124, 195, 182, 178, 205],  // context bull
+    [168, 182, 172, 168, 195],  // context bull
+    [212, 172, 165, 160, 182],  // context bull
+    // ── ALVO ──
+    [270, 165, 158, 148, 178],  // GOLD
+    // ─ noise ─
+    [318, 158, 164, 154, 172],
+    [362, 164, 170, 158, 178],
+    // ── SWEEP ──
+    [420, 170, 164, 130, 176],  // SWEEP — spike up (low h = higher price in canvas)
+    // ── NEGAÇÃO ──
+    [478, 164, 218, 158, 228],  // NEGATION — closes lower (higher c = lower price in canvas)
+    // ── Move down ──
+    [536, 218, 238, 212, 248],
+    [584, 238, 258, 232, 268],
+    [632, 258, 275, 252, 285],
+    [680, 275, 292, 270, 302],
+    [728, 292, 310, 288, 320],
+    [776, 310, 326, 306, 335],
+  ];
+
+  const alvoHighY = cds[4][3]; // high of alvo candle
+  hline(ctx, alvoHighY, PAL.gold, [6, 4], W);
+  label(ctx, 'NÍVEL DO ALVO', W - 16, alvoHighY - 5, PAL.gold, 9, 'right');
+
+  // sweep zone
+  ctx.fillStyle = 'rgba(167,139,250,0.06)';
+  ctx.fillRect(400, cds[7][3], 56, alvoHighY - cds[7][3]);
+
+  cds.forEach(([x, o, c, h, l], i) => {
+    let color;
+    if (i === 4) color = PAL.gold;
+    else if (i === 7) color = PAL.sweep;
+    else if (i === 8) color = PAL.bear;
+    else if (i >= 9) color = PAL.bear;
+    else color = PAL.gray;
+    candle(ctx, x, o, c, h, l, color, i >= 9 ? 22 : 28);
+  });
+
+  // Badges
+  badge(ctx, '① ALVO', 270, alvoHighY - 22, PAL.gold, '#000');
+  badge(ctx, '② SWEEP', 420, cds[7][3] - 22, PAL.sweep, '#fff');
+  badge(ctx, '③ NEGAÇÃO', 478, cds[8][3] - 22, PAL.bear, '#fff');
+
+  // stops annotation
+  ctx.fillStyle = 'rgba(245,197,24,0.07)';
+  ctx.fillRect(230, alvoHighY - 32, 120, 26);
+  label(ctx, 'STOPS ACUMULADOS', 236, alvoHighY - 14, PAL.gold, 9, 'left');
+
+  // continuation line
+  ctx.strokeStyle = 'rgba(239,68,68,0.25)';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  ctx.moveTo(500, cds[8][2] + 10);
+  ctx.lineTo(800, cds[14][2] + 10);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  label(ctx, 'MOVIMENTO REAL ↓', 650, cds[11][2] + 26, 'rgba(239,68,68,0.6)', 10, 'center');
+})();
+
+
+/* ══════════════════════════════════
+   SIMULATOR
+   ══════════════════════════════════ */
+function renderSim(type) {
+  $('btnBear').classList.toggle('active', type === 'bear');
+  $('btnBull').classList.toggle('active', type === 'bull');
+
+  const { ctx, W, H } = C('simChart', 860, 320);
+
+  ctx.fillStyle = PAL.bg;
+  ctx.fillRect(0, 0, W, H);
+  grid(ctx, W, H);
+
+  function lbl(t, x, y, c, sz=10, a='center') { label(ctx, t, x, y, c, sz, a); }
+  function bdg(t, x, y, bg, fg) { badge(ctx, t, x, y, bg, fg); }
+  function cv(x, o, c, h, l, col, w=30) { candle(ctx, x, o, c, h, l, col, w); }
+
+  if (type === 'bear') {
+    // context up
+    [[72,200,186],[116,186,174],[160,174,163],[204,163,155]].forEach(([x,o,c],i) =>
+      cv(x, o, c, o-10, c+10, PAL.bull, 24));
+
+    const alvH = 138;
+    hline(ctx, alvH, PAL.gold, [5,3], W);
+
+    // ALVO
+    cv(268, 155, 148, alvH, 165, PAL.gold);
+    bdg('① ALVO', 268, alvH - 20, PAL.gold, '#000');
+
+    // noise
+    cv(320, 148, 153, 143, 160, PAL.gray, 24);
+
+    // SWEEP
+    cv(390, 153, 149, 112, 160, PAL.sweep);
+    bdg('② SWEEP ↑', 390, 98, PAL.sweep, '#fff');
+    ctx.fillStyle = 'rgba(167,139,250,0.08)';
+    ctx.fillRect(372, 112, 36, alvH - 112);
+
+    // NEGAÇÃO
+    cv(462, 149, 196, 143, 206, PAL.bear, 34);
+    bdg('③ NEGAÇÃO ↓', 462, 130, PAL.bear, '#fff');
+
+    // move
+    [[534,196,214],[590,214,228],[646,228,244],[702,244,258],[758,258,272],[814,272,284]].forEach(([x,o,c]) =>
+      cv(x, o, c, o-6, c+6, PAL.bear, 22));
+
+    ctx.strokeStyle='rgba(239,68,68,0.25)'; ctx.lineWidth=1.5; ctx.setLineDash([5,3]);
+    ctx.beginPath(); ctx.moveTo(480,200); ctx.lineTo(840,284); ctx.stroke(); ctx.setLineDash([]);
+    lbl('MOVIMENTO REAL ↓', 680, H - 10, 'rgba(239,68,68,0.55)', 10);
+
+  } else {
+    // context down
+    [[72,120,136],[116,136,150],[160,150,162],[204,162,172]].forEach(([x,o,c]) =>
+      cv(x, o, c, o-10, c+10, PAL.bear, 24));
+
+    const alvL = 185;
+    hline(ctx, alvL, PAL.gold, [5,3], W);
+
+    // ALVO
+    cv(268, 172, 178, 165, alvL, PAL.gold);
+    bdg('① ALVO', 268, H - 10, PAL.gold, '#000');
+
+    // noise
+    cv(320, 178, 175, 172, 182, PAL.gray, 24);
+
+    // SWEEP
+    cv(390, 175, 180, 172, 208, PAL.sweep);
+    bdg('② SWEEP ↓', 390, H - 10, PAL.sweep, '#fff');
+    ctx.fillStyle = 'rgba(167,139,250,0.08)';
+    ctx.fillRect(372, alvL, 36, 208 - alvL);
+
+    // NEGAÇÃO
+    cv(462, 180, 138, 174, 148, PAL.bull, 34);
+    bdg('③ NEGAÇÃO ↑', 462, 124, PAL.bull, '#000');
+
+    // move
+    [[534,138,122],[590,122,108],[646,108,94],[702,94,80],[758,80,68],[814,68,58]].forEach(([x,o,c]) =>
+      cv(x, o, c, o-6, c+6, PAL.bull, 22));
+
+    ctx.strokeStyle='rgba(34,197,94,0.25)'; ctx.lineWidth=1.5; ctx.setLineDash([5,3]);
+    ctx.beginPath(); ctx.moveTo(480,136); ctx.lineTo(840,58); ctx.stroke(); ctx.setLineDash([]);
+    lbl('MOVIMENTO REAL ↑', 680, 18, 'rgba(34,197,94,0.55)', 10);
+  }
+}
+
+renderSim('bear');
+
+
+/* ── STEPS INTERACTION ── */
+document.querySelectorAll('.step-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const detailId = card.dataset.detail;
+    const detail = $(detailId);
+    const isOpen = detail.classList.contains('open');
+
+    document.querySelectorAll('.step-detail').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.step-card').forEach(c => c.classList.remove('open'));
+
+    if (!isOpen) {
+      detail.classList.add('open');
+      card.classList.add('open');
+    }
+  });
+});
+
+
+/* ── CHECKLIST ── */
+let ckCount = 0;
+const ckTotal = 7;
+
+function ckToggle(item) {
+  item.classList.toggle('checked');
+  ckCount = document.querySelectorAll('.ck-item.checked').length;
+  const pct = (ckCount / ckTotal) * 100;
+  $('scoreFill').style.width = pct + '%';
+  $('scoreText').textContent = `${ckCount} / ${ckTotal} critérios confirmados`;
+
+  const levels = [
+    [0, 2,  'Setup não validado',        '#4a5268'],
+    [3, 3,  'Setup fraco',               '#ef4444'],
+    [4, 4,  'Setup razoável',            '#f5c518'],
+    [5, 5,  'Setup sólido',              '#00d4ff'],
+    [6, 7,  'Setup de alta probabilidade','#22c55e'],
+  ];
+  const [,, text, color] = levels.find(([min, max]) => ckCount >= min && ckCount <= max) || levels[0];
+  const sq = $('scoreQual');
+  sq.textContent = text;
+  sq.style.color = color;
+}
+
+
+/* ── SCROLL REVEAL ── */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>

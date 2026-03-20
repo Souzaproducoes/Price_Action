@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Página principal -->
+  <url>
+    <loc>https://souzaproducoes.github.io/Price_Action/</loc>
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Módulo mais recente: Padrão dos 3 Candles -->
+  <url>
+    <loc>https://souzaproducoes.github.io/Price_Action/tres-candles.html</loc>
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Smart Money Concepts -->
+  <url>
+    <loc>https://souzaproducoes.github.io/Price_Action/smart-money-concepts.html</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Alinhamento de Fluxo -->
+  <url>
+    <loc>https://souzaproducoes.github.io/Price_Action/alinhamento-de-fluxo.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ICT Estudo Avançado -->
+  <url>
+    <loc>https://souzaproducoes.github.io/Price_Action/ICT_Estudo_Avancado.html</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- WINFUT -->
+  <url>
+    <loc>https://souzaproducoes.github.io/Price_Action/winfut.html</loc>
+    <lastmod>2025-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Candlesticks -->
+  <url>
+    <loc>https://souzaproducoes.github.io/Price_Action/candlesticks.html</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+</urlset>

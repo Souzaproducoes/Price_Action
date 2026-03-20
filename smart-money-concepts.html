@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Money Concepts — Guia Completo | Souza Produções</title>
+<meta name="description" content="Guia completo e ilustrado de Smart Money Concepts (SMC): estrutura de mercado, liquidez, Order Blocks, FVG, CTZ e muito mais. Metodologia ICT em português.">
+<meta name="keywords" content="smart money concepts, SMC, order blocks, FVG, BOS, CHoCH, CTZ, ICT, price action, trading, souza produções">
+<link rel="canonical" href="https://souzaproducoes.com.br/smart-money-concepts.html">
+<meta property="og:title" content="Smart Money Concepts — Guia Completo | Souza Produções">
+<meta property="og:description" content="Metodologia SMC completa: estrutura, liquidez, OBs, FVG e CTZ. Educação financeira avançada em português.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════
+   RESET & TOKENS — Alinhado ao site principal
+══════════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:        #080d18;
+  --bg2:       #0d1526;
+  --surface:   #111c30;
+  --surface2:  #172038;
+  --surface3:  #1e2d4a;
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(255,255,255,0.12);
+  --border3:   rgba(255,255,255,0.18);
+
+  --bullish:   #10b981;
+  --bullish2:  #34d399;
+  --bearish:   #ef4444;
+  --bearish2:  #f87171;
+  --neutral:   #f59e0b;
+  --gold:      #f5c842;
+  --blue:      #3b82f6;
+  --blue2:     #60a5fa;
+  --purple:    #a855f7;
+  --purple2:   #c084fc;
+  --winfut:    #0ea5e9;
+  --cyan:      #00d4ff;
+  --orange:    #f97316;
+  --pink:      #ec4899;
+
+  /* CTZ Pilares */
+  --ctz-c:     #00d4ff;
+  --ctz-t:     #f5c842;
+  --ctz-z:     #10b981;
+
+  --text:      #f1f5f9;
+  --muted:     #94a3b8;
+  --dim:       #475569;
+
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --font-display: 'Bebas Neue', sans-serif;
+
+  --radius:    12px;
+  --gap:       clamp(16px, 3vw, 28px);
+  --wrap:      1120px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--blue)}
+
+/* SELECTION */
+::selection{background:rgba(59,130,246,0.3);color:var(--text)}
+
+/* ══════════════════════════════════════════════
+   PROGRESS BAR
+══════════════════════════════════════════════ */
+#prog{
+  position:fixed;top:0;left:0;height:2px;z-index:9999;width:0;
+  background:linear-gradient(90deg,var(--blue),var(--bullish),var(--gold));
+  transition:width .15s linear;
+}
+
+/* ══════════════════════════════════════════════
+   TOPBAR / NAV
+══════════════════════════════════════════════ */
+.topbar{
+  position:sticky;top:0;z-index:500;
+  background:rgba(8,13,24,0.95);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  padding:0 var(--gap);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;min-height:54px;flex-wrap:wrap;
+}
+
+.btn-home{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 16px;border-radius:20px;
+  background:rgba(59,130,246,0.1);
+  border:1px solid rgba(59,130,246,0.3);
+  color:var(--blue2);font-size:0.78rem;font-weight:700;
+  text-decoration:none;letter-spacing:0.3px;
+  transition:all .2s;font-family:var(--font-mono);
+}
+.btn-home:hover{background:rgba(59,130,246,0.2);border-color:var(--blue);color:var(--text);transform:translateX(-2px)}
+.btn-home svg{width:14px;height:14px;flex-shrink:0}
+
+.topbar-brand{
+  font-family:var(--font-display);font-size:1.3rem;letter-spacing:2px;
+  background:linear-gradient(135deg,var(--blue),var(--bullish));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+.topbar-nav{display:flex;gap:3px;flex-wrap:wrap}
+.tnav-link{
+  padding:5px 11px;border-radius:20px;
+  font-size:0.72rem;font-weight:600;color:var(--muted);
+  text-decoration:none;transition:all .2s;white-space:nowrap;
+  font-family:var(--font-mono);letter-spacing:0.5px;
+}
+.tnav-link:hover,.tnav-link.active{color:var(--text);background:var(--surface)}
+
+/* ══════════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════════ */
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gap)}
+
+/* ══════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════ */
+.hero{
+  position:relative;overflow:hidden;
+  padding:clamp(70px,12vw,130px) var(--gap) clamp(50px,9vw,100px);
+  text-align:center;
+}
+
+/* Fundo animado */
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% -10%, rgba(59,130,246,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(16,185,129,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 90% 70%, rgba(168,85,247,0.05) 0%, transparent 50%);
+}
+/* Grid de fundo */
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.05) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 75%);
+}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 18px;border-radius:40px;margin-bottom:28px;
+  background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);
+  font-family:var(--font-mono);font-size:0.7rem;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:var(--blue2);
+}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--bullish);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(3.5rem,9vw,8rem);
+  letter-spacing:4px;line-height:0.9;
+  margin-bottom:16px;color:var(--text);
+}
+.hero h1 .grad-blue{background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 .grad-green{background:linear-gradient(135deg,var(--bullish),var(--bullish2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.hero-sub2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2.2rem);
+  letter-spacing:4px;color:var(--muted);margin-bottom:24px;
+}
+
+.hero-desc{
+  font-size:clamp(0.95rem,2vw,1.1rem);color:var(--muted);
+  max-width:600px;margin:0 auto 44px;line-height:1.7;
+}
+
+/* Contadores SMC */
+.hero-stats{
+  display:flex;justify-content:center;gap:clamp(16px,4vw,40px);
+  flex-wrap:wrap;margin-bottom:48px;
+}
+.stat-item{text-align:center}
+.stat-num{
+  font-family:var(--font-display);font-size:2.5rem;letter-spacing:2px;
+  display:block;
+}
+.stat-label{font-size:0.72rem;color:var(--muted);font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+
+/* Módulos index visual */
+.modules-preview{
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+  max-width:780px;margin:0 auto;
+}
+.mod-chip{
+  padding:7px 14px;border-radius:20px;
+  font-size:0.72rem;font-weight:700;font-family:var(--font-mono);
+  border:1px solid;cursor:pointer;text-decoration:none;
+  transition:all .2s;letter-spacing:0.5px;
+}
+.mod-chip:hover{transform:translateY(-2px);opacity:0.9}
+
+/* ══════════════════════════════════════════════
+   SECTION HEADER PADRÃO
+══════════════════════════════════════════════ */
+.sec-header{margin-bottom:40px}
+.sec-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:0.67rem;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;
+}
+.sec-tag::before{content:'';width:20px;height:1px;background:currentColor;display:block}
+.sec-title{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,3.2rem);
+  letter-spacing:2px;line-height:1;
+  margin-bottom:14px;
+}
+.sec-desc{font-size:0.97rem;color:var(--muted);max-width:640px;line-height:1.7}
+
+/* ══════════════════════════════════════════════
+   MÓDULO SECTION BASE
+══════════════════════════════════════════════ */
+.module{padding:clamp(50px,8vw,90px) 0}
+.module-alt{background:var(--bg2)}
+.module-alt2{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%)}
+
+/* ══════════════════════════════════════════════
+   CHART BOX — DIAGRAMA REUTILIZÁVEL
+══════════════════════════════════════════════ */
+.chart-box{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:var(--radius);overflow:hidden;
+}
+.chart-bar{
+  padding:10px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;background:rgba(0,0,0,0.2);
+}
+.cbar-dot{width:9px;height:9px;border-radius:50%}
+.cbar-title{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);letter-spacing:1px;flex:1}
+.cbar-badge{
+  font-family:var(--font-mono);font-size:0.62rem;font-weight:700;
+  padding:2px 8px;border-radius:10px;letter-spacing:1px;
+}
+.chart-inner{padding:clamp(12px,2vw,20px)}
+.svg-resp{width:100%;height:auto;display:block}
+
+/* ══════════════════════════════════════════════
+   INFO CARDS / CONCEITO CARDS
+══════════════════════════════════════════════ */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.concept-card{
+  padding:22px 20px;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--border);
+  transition:border-color .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.concept-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--c-accent,var(--blue));
+}
+.concept-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.card-icon{font-size:1.6rem;margin-bottom:12px;display:block}
+.card-title{font-size:0.97rem;font-weight:800;margin-bottom:8px;color:var(--text)}
+.card-desc{font-size:0.85rem;color:var(--muted);line-height:1.6}
+.card-badge{
+  display:inline-block;margin-top:10px;
+  padding:3px 10px;border-radius:10px;
+  font-size:0.67rem;font-weight:700;font-family:var(--font-mono);letter-spacing:1px;
+}
+
+/* ══════════════════════════════════════════════
+   TWO-COL LAYOUT
+══════════════════════════════════════════════ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.two-col.reverse{direction:rtl}.two-col.reverse>*{direction:ltr}
+@media(max-width:720px){.two-col,.two-col.reverse{grid-template-columns:1fr;direction:ltr}}
+
+/* ══════════════════════════════════════════════
+   RULE LIST
+══════════════════════════════════════════════ */
+.rule-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.rule-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 14px;border-radius:9px;
+  background:rgba(0,0,0,0.25);
+  border-left:3px solid var(--c-accent,var(--blue));
+  font-size:0.88rem;line-height:1.5;color:var(--text);
+}
+.rule-list li .ri{
+  flex-shrink:0;width:18px;height:18px;border-radius:50%;
+  background:var(--c-accent,var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.6rem;font-weight:900;color:var(--bg);margin-top:1px;
+}
+
+/* ══════════════════════════════════════════════
+   TIP / ALERT BOX
+══════════════════════════════════════════════ */
+.tip{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:18px 20px;border-radius:var(--radius);margin:24px 0;
+}
+.tip-gold{background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.2)}
+.tip-blue{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2)}
+.tip-green{background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2)}
+.tip-red{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2)}
+.tip-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.tip p{font-size:0.88rem;line-height:1.6;color:var(--text)}
+.tip strong{color:var(--gold)}
+.tip-blue strong{color:var(--blue2)}
+.tip-green strong{color:var(--bullish2)}
+.tip-red strong{color:var(--bearish2)}
+
+/* ══════════════════════════════════════════════
+   DIVIDER
+══════════════════════════════════════════════ */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:0 var(--gap)}
+
+/* ══════════════════════════════════════════════
+   STEP FLOW
+══════════════════════════════════════════════ */
+.flow-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;background:var(--border);border-radius:var(--radius);overflow:hidden}
+.flow-step{
+  background:var(--surface);padding:24px 20px;
+  position:relative;transition:background .2s;
+}
+.flow-step:hover{background:var(--surface2)}
+.fs-num{font-family:var(--font-display);font-size:2.5rem;color:var(--dim);letter-spacing:2px;line-height:1;margin-bottom:12px}
+.fs-icon{font-size:1.5rem;margin-bottom:8px;display:block}
+.fs-title{font-size:0.9rem;font-weight:800;color:var(--text);margin-bottom:6px}
+.fs-desc{font-size:0.8rem;color:var(--muted);line-height:1.55}
+
+/* ══════════════════════════════════════════════
+   CHECKLIST INTERATIVO
+══════════════════════════════════════════════ */
+.checklist-card{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:var(--radius);overflow:hidden;
+}
+.cl-header{
+  padding:20px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;background:rgba(0,0,0,0.15);
+}
+.cl-header-icon{font-size:1.8rem}
+.cl-title{font-size:1rem;font-weight:800}
+.cl-sub{font-size:0.78rem;color:var(--muted);margin-top:2px}
+.cl-group-label{
+  padding:12px 24px 6px;
+  font-family:var(--font-mono);font-size:0.65rem;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;
+  border-top:1px solid var(--border);
+}
+.cl-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:12px 24px;cursor:pointer;transition:background .15s;
+  border-top:1px solid rgba(255,255,255,0.03);
+}
+.cl-item:hover{background:rgba(255,255,255,0.02)}
+.cl-box{
+  flex-shrink:0;width:18px;height:18px;border-radius:4px;
+  border:1.5px solid var(--dim);margin-top:2px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.cl-item.done .cl-box{background:var(--bullish);border-color:var(--bullish)}
+.cl-item.done .cl-box::after{content:'✓';font-size:10px;color:var(--bg);font-weight:900}
+.cl-text{font-size:0.85rem;color:var(--text);line-height:1.45}
+.cl-text small{color:var(--muted);font-size:0.78rem;display:block;margin-top:2px}
+.cl-item.done .cl-text{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--dim)}
+.cl-footer{
+  padding:16px 24px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:rgba(0,0,0,0.1);
+}
+.cl-prog-track{flex:1;max-width:280px;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.cl-prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--bullish));width:0%;transition:width .3s}
+.cl-prog-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted)}
+.btn-reset{
+  padding:6px 16px;border-radius:20px;background:transparent;
+  border:1px solid var(--border2);color:var(--muted);
+  font-size:0.75rem;font-weight:600;cursor:pointer;font-family:var(--font-body);
+  transition:all .2s;
+}
+.btn-reset:hover{border-color:var(--bearish);color:var(--bearish)}
+
+/* ══════════════════════════════════════════════
+   GLOSSÁRIO
+══════════════════════════════════════════════ */
+.gloss-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.gloss-item{
+  padding:18px 20px;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--border);
+  transition:border-color .2s,transform .2s;
+}
+.gloss-item:hover{border-color:var(--border2);transform:translateY(-2px)}
+.gloss-term{
+  font-family:var(--font-mono);font-size:0.75rem;font-weight:700;
+  color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;
+}
+.gloss-def{font-size:0.84rem;color:var(--muted);line-height:1.55}
+
+/* ══════════════════════════════════════════════
+   CTZ SECTION ESPECIAL
+══════════════════════════════════════════════ */
+.ctz-hero{
+  background:linear-gradient(135deg,rgba(0,212,255,0.05) 0%,rgba(245,200,66,0.05) 50%,rgba(16,185,129,0.05) 100%);
+  border:1px solid var(--border2);border-radius:20px;
+  padding:clamp(28px,4vw,48px);margin-bottom:40px;
+  position:relative;overflow:hidden;
+}
+.ctz-hero::before{
+  content:'CTZ';position:absolute;right:-20px;top:-30px;
+  font-family:var(--font-display);font-size:12rem;letter-spacing:-4px;
+  color:rgba(255,255,255,0.02);pointer-events:none;user-select:none;
+}
+.ctz-pillars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:28px}
+@media(max-width:600px){.ctz-pillars{grid-template-columns:1fr}}
+.ctz-pillar{
+  padding:20px;border-radius:14px;
+  border:1px solid;position:relative;overflow:hidden;
+  transition:transform .2s;
+}
+.ctz-pillar:hover{transform:translateY(-4px)}
+.ctz-pillar[data-p="C"]{background:rgba(0,212,255,0.05);border-color:rgba(0,212,255,0.25)}
+.ctz-pillar[data-p="T"]{background:rgba(245,200,66,0.05);border-color:rgba(245,200,66,0.25)}
+.ctz-pillar[data-p="Z"]{background:rgba(16,185,129,0.05);border-color:rgba(16,185,129,0.25)}
+.ctz-letter{
+  font-family:var(--font-display);font-size:4rem;line-height:1;
+  margin-bottom:8px;letter-spacing:2px;
+}
+.ctz-pillar[data-p="C"] .ctz-letter{color:var(--ctz-c)}
+.ctz-pillar[data-p="T"] .ctz-letter{color:var(--ctz-t)}
+.ctz-pillar[data-p="Z"] .ctz-letter{color:var(--ctz-z)}
+.ctz-pname{font-size:0.8rem;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.ctz-pdesc{font-size:0.83rem;color:var(--text);line-height:1.55}
+
+/* ══════════════════════════════════════════════
+   KILL ZONES TABLE
+══════════════════════════════════════════════ */
+.kz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.kz-card{
+  padding:22px 20px;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--border);
+  text-align:center;transition:all .2s;
+}
+.kz-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.kz-icon{font-size:2rem;margin-bottom:10px;display:block}
+.kz-name{font-weight:800;font-size:0.95rem;color:var(--text);margin-bottom:4px}
+.kz-time{font-family:var(--font-mono);font-size:0.82rem;color:var(--gold);margin-bottom:6px}
+.kz-brt{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted)}
+.kz-desc{font-size:0.8rem;color:var(--muted);margin-top:8px;line-height:1.5}
+.kz-bar{height:3px;border-radius:2px;margin-top:14px}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+.site-footer{
+  padding:clamp(40px,6vw,70px) var(--gap) clamp(30px,5vw,50px);
+  border-top:1px solid var(--border);text-align:center;
+}
+.footer-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 32px;border-radius:40px;margin-bottom:32px;
+  background:linear-gradient(135deg,var(--blue),var(--bullish));
+  color:#fff;font-weight:800;font-size:1rem;text-decoration:none;
+  transition:all .3s;letter-spacing:0.5px;
+  box-shadow:0 8px 32px rgba(59,130,246,0.3);
+}
+.footer-cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(59,130,246,0.45)}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-top:20px;flex-wrap:wrap}
+.footer-links a{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-disc{font-size:0.75rem;color:var(--dim);margin-top:24px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* ══════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(200%)}}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ══════════════════════════════════════════════
+   COMPARISON TABLE
+══════════════════════════════════════════════ */
+.comp-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.comp-table th{
+  padding:12px 16px;text-align:left;
+  font-family:var(--font-mono);font-size:0.68rem;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);
+  background:rgba(0,0,0,0.2);border-bottom:1px solid var(--border2);
+}
+.comp-table td{
+  padding:11px 16px;border-bottom:1px solid var(--border);
+  vertical-align:top;color:var(--text);line-height:1.5;
+}
+.comp-table tr:hover td{background:rgba(255,255,255,0.015)}
+.comp-table .g{color:var(--bullish);font-weight:700}
+.comp-table .r{color:var(--bearish);font-weight:700}
+.comp-table .y{color:var(--gold);font-weight:700}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE OVERRIDES
+══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .topbar-nav{display:none}
+  .hero h1{font-size:clamp(2.8rem,12vw,6rem)}
+}
+@media(max-width:600px){
+  .ctz-pillars{grid-template-columns:1fr}
+  .hero-stats{gap:20px}
+}
+
+  /* ── QUIZ BTN & MODAL ── */
+  .quiz-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 32px; border-radius: 14px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff; font-weight: 800; font-size: 0.95rem;
+    border: none; cursor: pointer; letter-spacing: 0.3px;
+    box-shadow: 0 4px 20px rgba(59,130,246,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 0 auto;
+  }
+  .quiz-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.5); }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- ══════════════════════════════════════════════
+     TOPBAR
+══════════════════════════════════════════════ -->
+<header class="topbar">
+  <a href="index.html" class="btn-home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    ← Voltar ao Início
+  </a>
+
+  <span class="topbar-brand">SMART MONEY CONCEPTS</span>
+
+  <nav class="topbar-nav">
+    <a href="#estrutura"  class="tnav-link">Estrutura</a>
+    <a href="#liquidez"   class="tnav-link">Liquidez</a>
+    <a href="#ob"         class="tnav-link">Order Blocks</a>
+    <a href="#fvg"        class="tnav-link">FVG</a>
+    <a href="#premium"    class="tnav-link">Premium/Discount</a>
+    <a href="#killzones"  class="tnav-link">Kill Zones</a>
+    <a href="#ctz"        class="tnav-link">CTZ</a>
+    <a href="#entrada"    class="tnav-link">Entrada</a>
+    <a href="#risco"      class="tnav-link">Risco</a>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div style="position:relative;z-index:1">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Metodologia ICT · Inner Circle Trader
+    </div>
+
+    <h1>
+      <span class="grad-blue">SMART</span><br>
+      <span class="grad-green">MONEY</span>
+    </h1>
+    <div class="hero-sub2">CONCEPTS — GUIA COMPLETO</div>
+
+    <p class="hero-desc">
+      A metodologia completa do Smart Money: como identificar onde as instituições entram,
+      onde coletam liquidez e como usar isso a seu favor — do básico ao avançado.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num" style="color:var(--blue)">12</span>
+        <span class="stat-label">Módulos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" style="color:var(--bullish)">30+</span>
+        <span class="stat-label">Conceitos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" style="color:var(--gold)">CTZ</span>
+        <span class="stat-label">Metodologia</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" style="color:var(--purple)">SVG</span>
+        <span class="stat-label">Diagramas</span>
+      </div>
+    </div>
+
+    <div class="modules-preview">
+      <a href="#estrutura" class="mod-chip" style="color:var(--blue2);border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.07)">📐 Estrutura de Mercado</a>
+      <a href="#liquidez"  class="mod-chip" style="color:var(--bearish2);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.06)">💧 Liquidez</a>
+      <a href="#ob"        class="mod-chip" style="color:var(--cyan);border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.06)">🟦 Order Blocks</a>
+      <a href="#fvg"       class="mod-chip" style="color:var(--purple2);border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.06)">🟣 FVG</a>
+      <a href="#premium"   class="mod-chip" style="color:var(--gold);border-color:rgba(245,200,66,0.3);background:rgba(245,200,66,0.06)">⚖️ Premium/Discount</a>
+      <a href="#killzones" class="mod-chip" style="color:var(--orange);border-color:rgba(249,115,22,0.3);background:rgba(249,115,22,0.06)">⏰ Kill Zones</a>
+      <a href="#ctz"       class="mod-chip" style="color:var(--bullish2);border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.06)">✅ CTZ Completo</a>
+      <a href="#entrada"   class="mod-chip" style="color:var(--pink);border-color:rgba(236,72,153,0.3);background:rgba(236,72,153,0.06)">🎯 Fluxo de Entrada</a>
+    <div style="margin-top:28px;text-align:center;">
+      <button class="quiz-btn" onclick="startModuleQuiz('smc')" style="margin:0 auto;display:inline-flex;">
+        🧠 Testar Conhecimentos — Quiz Smart Money Concepts
+      </button>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     01 — O QUE É SMC
+══════════════════════════════════════════════ -->
+<section class="module" id="smc-intro">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">01 — Fundamento</div>
+      <h2 class="sec-title">O que é <span style="color:var(--blue2)">Smart Money?</span></h2>
+      <p class="sec-desc">Smart Money são os grandes participantes institucionais — bancos, hedge funds, market makers, bancos centrais — que movem o mercado com ordens de tamanho incompatível com o varejo. Entender seu comportamento é a base de tudo.</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="concept-card" style="--c-accent:var(--blue)">
+        <span class="card-icon">🏦</span>
+        <div class="card-title">Quem é o Smart Money?</div>
+        <div class="card-desc">Bancos de investimento, hedge funds, market makers e bancos centrais. Eles possuem ordens de bilhões — não podem entrar e sair rapidamente sem mover o preço. Por isso, constroem posições em zonas específicas.</div>
+        <span class="card-badge" style="background:rgba(59,130,246,0.1);color:var(--blue2)">Institucional</span>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🐑</span>
+        <div class="card-title">Quem é o Dumb Money?</div>
+        <div class="card-desc">Os traders de varejo (retail). Operam com suporte/resistência clássicos, médias móveis e indicadores defasados. São a fonte de liquidez para o Smart Money — seus stops são coletados antes das grandes movimentações.</div>
+        <span class="card-badge" style="background:rgba(239,68,68,0.1);color:var(--bearish2)">Varejo</span>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--gold)">
+        <span class="card-icon">📊</span>
+        <div class="card-title">Como SMC funciona?</div>
+        <div class="card-desc">O Smart Money manipula o mercado em três fases: Acumulação (coleta posição), Manipulação (faz sweep para coletar liquidez do varejo) e Distribuição (move o preço para o alvo). O SMC ensina a identificar cada fase.</div>
+        <span class="card-badge" style="background:rgba(245,200,66,0.1);color:var(--gold)">3 Fases</span>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bullish)">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">Por que usar SMC?</div>
+        <div class="card-desc">Em vez de lutar contra o Smart Money, aprendemos a seguir suas pegadas: Order Blocks, FVGs, estrutura de mercado e liquidez. Quem entende SMC opera com o fluxo institucional, não contra ele.</div>
+        <span class="card-badge" style="background:rgba(16,185,129,0.1);color:var(--bullish2)">Vantagem</span>
+      </div>
+    </div>
+
+    <div class="tip tip-gold reveal" style="margin-top:32px">
+      <span class="tip-icon">💡</span>
+      <p><strong>Princípio #1 do SMC:</strong> O mercado não é aleatório. Cada movimento existe para cumprir um propósito: coletar liquidez, preencher imbalances e reequilibrar o preço entre zonas institucionais. Quem enxerga esses padrões opera com consistência.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     02 — ESTRUTURA DE MERCADO
+══════════════════════════════════════════════ -->
+<section class="module module-alt" id="estrutura">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">02 — Market Structure</div>
+      <h2 class="sec-title">Estrutura de <span style="color:var(--blue2)">Mercado</span></h2>
+      <p class="sec-desc">A estrutura de mercado é o mapa do território. Antes de qualquer OB ou FVG, você precisa entender em qual fase estrutural o mercado está operando.</p>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <div class="cards-grid" style="grid-template-columns:1fr;gap:12px">
+          <div class="concept-card" style="--c-accent:var(--bullish)">
+            <span class="card-icon">📈</span>
+            <div class="card-title">Tendência de Alta (Bullish Market Structure)</div>
+            <div class="card-desc">Série de Higher Highs (HH) e Higher Lows (HL). O mercado está fazendo topos e fundos progressivamente mais altos. Smart Money está acumulando e distribuindo em níveis cada vez mais altos.</div>
+          </div>
+          <div class="concept-card" style="--c-accent:var(--bearish)">
+            <span class="card-icon">📉</span>
+            <div class="card-title">Tendência de Baixa (Bearish Market Structure)</div>
+            <div class="card-desc">Série de Lower Highs (LH) e Lower Lows (LL). O mercado está fazendo topos e fundos progressivamente mais baixos. Smart Money está distribuindo em níveis cada vez menores.</div>
+          </div>
+          <div class="concept-card" style="--c-accent:var(--gold)">
+            <span class="card-icon">↔️</span>
+            <div class="card-title">Consolidação (Range)</div>
+            <div class="card-desc">Preço oscilando entre um teto (BSL — Buy Side Liquidity) e um piso (SSL — Sell Side Liquidity). É nessa fase que o Smart Money acumula posição antes do próximo movimento direcional.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIAGRAMA SVG ESTRUTURA -->
+      <div class="chart-box reveal">
+        <div class="chart-bar">
+          <span class="cbar-dot" style="background:var(--bullish)"></span>
+          <span class="cbar-dot" style="background:var(--bearish)"></span>
+          <span class="cbar-dot" style="background:var(--gold)"></span>
+          <span class="cbar-title">ESTRUTURA DE MERCADO — BOS · CHoCH · MSS</span>
+        </div>
+        <div class="chart-inner">
+          <svg viewBox="0 0 540 360" class="svg-resp">
+            <defs>
+              <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#10b981"/>
+              </marker>
+              <marker id="arr-r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/>
+              </marker>
+              <marker id="arr-b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+              </marker>
+            </defs>
+            <rect width="540" height="360" fill="#111c30"/>
+
+            <!-- Grid -->
+            <line x1="0" y1="90" x2="540" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+            <line x1="0" y1="180" x2="540" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+            <line x1="0" y1="270" x2="540" y2="270" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+            <!-- === FASE 1: ALTA (HL, HH, HL, HH) === -->
+            <!-- Rótulo -->
+            <rect x="10" y="14" width="100" height="16" rx="8" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.3)" stroke-width="0.5"/>
+            <text x="60" y="25" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BULLISH PHASE</text>
+
+            <!-- Linha de preço subindo -->
+            <polyline points="20,280 55,250 80,260 120,215 148,228 190,175 218,188 260,140"
+              fill="none" stroke="#10b981" stroke-width="2.5" stroke-linejoin="round"/>
+
+            <!-- Candles estilizados de alta -->
+            <rect x="16" y="260" width="8" height="18" fill="#10b981" rx="1" opacity="0.8"/>
+            <rect x="50" y="235" width="8" height="18" fill="#10b981" rx="1" opacity="0.8"/>
+            <rect x="84" y="248" width="8" height="14" fill="#ef4444" rx="1" opacity="0.7"/>
+            <rect x="118" y="200" width="8" height="18" fill="#10b981" rx="1" opacity="0.8"/>
+            <rect x="152" y="216" width="8" height="14" fill="#ef4444" rx="1" opacity="0.7"/>
+            <rect x="188" y="160" width="8" height="18" fill="#10b981" rx="1" opacity="0.8"/>
+            <rect x="222" y="176" width="8" height="14" fill="#ef4444" rx="1" opacity="0.7"/>
+
+            <!-- Labels HL e HH -->
+            <text x="20" y="298" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">HL</text>
+            <text x="54" y="228" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">HH</text>
+            <text x="88" y="278" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">HL</text>
+            <text x="122" y="207" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">HH</text>
+            <text x="156" y="244" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">HL</text>
+            <text x="192" y="170" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">HH</text>
+            <text x="226" y="208" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">HL</text>
+
+            <!-- === CHoCH === -->
+            <rect x="260" y="118" width="52" height="16" rx="8" fill="rgba(245,200,66,0.12)" stroke="rgba(245,200,66,0.4)" stroke-width="0.8"/>
+            <text x="286" y="129" text-anchor="middle" fill="#f5c842" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">CHoCH</text>
+            <!-- Linha de referência CHoCH -->
+            <line x1="226" y1="188" x2="380" y2="188" stroke="rgba(245,200,66,0.35)" stroke-width="1" stroke-dasharray="4 3"/>
+
+            <!-- Candle de reversão -->
+            <line x1="264" y1="128" x2="264" y2="192" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="258" y="140" width="10" height="50" fill="#ef4444" rx="1"/>
+
+            <!-- === BOS === -->
+            <!-- Linha BOS -->
+            <line x1="218" y1="188" x2="390" y2="188" stroke="rgba(59,130,246,0.5)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <rect x="340" y="176" width="40" height="16" rx="8" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.4)" stroke-width="0.8"/>
+            <text x="360" y="187" text-anchor="middle" fill="#3b82f6" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BOS</text>
+
+            <!-- === FASE 2: BAIXA (LH, LL, LH, LL) === -->
+            <rect x="310" y="14" width="100" height="16" rx="8" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)" stroke-width="0.5"/>
+            <text x="360" y="25" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BEARISH PHASE</text>
+
+            <polyline points="264,140 300,190 326,172 365,220 393,202 432,250 458,230 498,280"
+              fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linejoin="round"/>
+
+            <rect x="296" y="175" width="8" height="18" fill="#ef4444" rx="1" opacity="0.8"/>
+            <rect x="328" y="163" width="8" height="12" fill="#10b981" rx="1" opacity="0.7"/>
+            <rect x="362" y="208" width="8" height="16" fill="#ef4444" rx="1" opacity="0.8"/>
+            <rect x="394" y="192" width="8" height="12" fill="#10b981" rx="1" opacity="0.7"/>
+            <rect x="428" y="238" width="8" height="16" fill="#ef4444" rx="1" opacity="0.8"/>
+            <rect x="460" y="220" width="8" height="12" fill="#10b981" rx="1" opacity="0.7"/>
+
+            <text x="300" y="210" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">LL</text>
+            <text x="332" y="160" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">LH</text>
+            <text x="366" y="238" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">LL</text>
+            <text x="398" y="198" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">LH</text>
+            <text x="432" y="268" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">LL</text>
+            <text x="462" y="226" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">LH</text>
+
+            <!-- Legenda rodapé -->
+            <rect x="10" y="338" width="520" height="18" rx="4" fill="rgba(0,0,0,0.2)"/>
+            <text x="270" y="350" text-anchor="middle" fill="#475569" font-size="8" letter-spacing="1" font-family="JetBrains Mono, monospace">HH=Higher High · HL=Higher Low · LH=Lower High · LL=Lower Low · CHoCH=Change of Character · BOS=Break of Structure</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOS vs CHoCH vs MSS explicado -->
+    <div class="cards-grid reveal" style="margin-top:28px">
+      <div class="concept-card" style="--c-accent:var(--blue)">
+        <span class="card-icon">💥</span>
+        <div class="card-title">BOS — Break of Structure</div>
+        <div class="card-desc">O preço rompe o último High ou Low relevante na direção da tendência vigente. <strong>Confirma</strong> a continuação. No bullish: preço supera o último HH. No bearish: preço viola o último LL.</div>
+        <span class="card-badge" style="background:rgba(59,130,246,0.1);color:var(--blue2)">Continuação</span>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--gold)">
+        <span class="card-icon">🔄</span>
+        <div class="card-title">CHoCH — Change of Character</div>
+        <div class="card-desc"><strong>Primeira</strong> quebra de estrutura contra a tendência vigente. Sinaliza possível reversão. No bullish: preço viola o último HL. No bearish: preço supera o último LH. Confirma que algo mudou.</div>
+        <span class="card-badge" style="background:rgba(245,200,66,0.1);color:var(--gold)">Alerta</span>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--purple)">
+        <span class="card-icon">⚡</span>
+        <div class="card-title">MSS — Market Structure Shift</div>
+        <div class="card-desc">Variação mais agressiva do CHoCH — uma quebra de estrutura acompanhada de impulso forte e FVG, geralmente com sweep de liquidez. Confirma reversão com alta probabilidade no LTF.</div>
+        <span class="card-badge" style="background:rgba(168,85,247,0.1);color:var(--purple2)">Reversão Forte</span>
+      </div>
+    </div>
+
+    <div class="tip tip-blue reveal">
+      <span class="tip-icon">📌</span>
+      <p><strong>Regra Fundamental:</strong> Nunca opere CHoCH isolado. O CHoCH sozinho é apenas um alerta. Espere a confirmação com a formação de BOS no LTF, FVG ou OB para confirmar que a estrutura realmente mudou.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     03 — LIQUIDEZ
+══════════════════════════════════════════════ -->
+<section class="module" id="liquidez">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">03 — Liquidity</div>
+      <h2 class="sec-title">Liquidez — <span style="color:var(--bearish2)">O Combustível</span></h2>
+      <p class="sec-desc">Liquidez é o conceito mais importante do SMC. O Smart Money precisa de liquidez (stops do varejo) para executar suas ordens massivas sem mover o mercado adversamente.</p>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <div class="cards-grid" style="grid-template-columns:1fr;gap:12px">
+          <div class="concept-card" style="--c-accent:var(--bullish)">
+            <span class="card-icon">📈</span>
+            <div class="card-title">BSL — Buy Side Liquidity</div>
+            <div class="card-desc">Liquidez acima de topos: onde os stops dos vendedores (shorts) e os buy stops do varejo estão acumulados. O Smart Money <em>varre</em> esses níveis para executar ordens de venda grandes.</div>
+          </div>
+          <div class="concept-card" style="--c-accent:var(--bearish)">
+            <span class="card-icon">📉</span>
+            <div class="card-title">SSL — Sell Side Liquidity</div>
+            <div class="card-desc">Liquidez abaixo de fundos: onde os stops dos compradores (longs) e os sell stops estão acumulados. O Smart Money <em>varre</em> esses níveis para executar ordens de compra grandes.</div>
+          </div>
+          <div class="concept-card" style="--c-accent:var(--orange)">
+            <span class="card-icon">🌊</span>
+            <div class="card-title">Liquidity Sweep (Stop Hunt)</div>
+            <div class="card-desc">O movimento que ultrapassa um nível de liquidez para acionar stops e depois reverte. É a "armadilha" do Smart Money. Após o sweep, o preço geralmente se move na direção oposta com força.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIAGRAMA LIQUIDEZ -->
+      <div class="chart-box reveal">
+        <div class="chart-bar">
+          <span class="cbar-dot" style="background:var(--bearish)"></span>
+          <span class="cbar-dot" style="background:var(--bullish)"></span>
+          <span class="cbar-title">LIQUIDEZ — BSL · SSL · SWEEP</span>
+          <span class="cbar-badge" style="background:rgba(239,68,68,0.1);color:var(--bearish2)">STOP HUNT</span>
+        </div>
+        <div class="chart-inner">
+          <svg viewBox="0 0 480 300" class="svg-resp">
+            <rect width="480" height="300" fill="#111c30"/>
+
+            <!-- Grid -->
+            <line x1="0" y1="75" x2="480" y2="75" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+            <line x1="0" y1="150" x2="480" y2="150" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+            <line x1="0" y1="225" x2="480" y2="225" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+            <!-- BSL line (resistência / topo com stops) -->
+            <line x1="40" y1="72" x2="440" y2="72" stroke="rgba(16,185,129,0.4)" stroke-width="1.2" stroke-dasharray="5 3"/>
+            <rect x="350" y="60" width="90" height="16" rx="8" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.3)" stroke-width="0.5"/>
+            <text x="395" y="71" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BSL 🎯</text>
+            <text x="395" y="82" text-anchor="middle" fill="#10b981" font-size="7" font-family="JetBrains Mono, monospace">Buy-stops aqui</text>
+
+            <!-- SSL line (suporte / fundo com stops) -->
+            <line x1="40" y1="228" x2="440" y2="228" stroke="rgba(239,68,68,0.4)" stroke-width="1.2" stroke-dasharray="5 3"/>
+            <rect x="350" y="218" width="90" height="16" rx="8" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)" stroke-width="0.5"/>
+            <text x="395" y="229" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">SSL 🎯</text>
+            <text x="395" y="240" text-anchor="middle" fill="#ef4444" font-size="7" font-family="JetBrains Mono, monospace">Sell-stops aqui</text>
+
+            <!-- Range consolidação candles -->
+            <line x1="50" y1="200" x2="50" y2="110" stroke="#94a3b8" stroke-width="1.2"/>
+            <rect x="44" y="130" width="12" height="50" fill="#94a3b8" rx="1" opacity="0.5"/>
+            <line x1="75" y1="195" x2="75" y2="105" stroke="#94a3b8" stroke-width="1.2"/>
+            <rect x="69" y="120" width="12" height="60" fill="#94a3b8" rx="1" opacity="0.4"/>
+            <line x1="100" y1="205" x2="100" y2="108" stroke="#94a3b8" stroke-width="1.2"/>
+            <rect x="94" y="130" width="12" height="55" fill="#94a3b8" rx="1" opacity="0.5"/>
+            <line x1="125" y1="198" x2="125" y2="112" stroke="#94a3b8" stroke-width="1.2"/>
+            <rect x="119" y="128" width="12" height="50" fill="#94a3b8" rx="1" opacity="0.4"/>
+
+            <!-- SWEEP BSL (spike acima + queda) -->
+            <!-- Spike -->
+            <line x1="155" y1="42" x2="155" y2="120" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="149" y="68" width="12" height="50" fill="#10b981" rx="1"/>
+            <!-- Label SWEEP BSL -->
+            <rect x="100" y="28" width="110" height="18" rx="9" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.3)" stroke-width="0.5"/>
+            <text x="155" y="40" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">⚡ BSL SWEEP</text>
+            <line x1="155" y1="46" x2="155" y2="62" stroke="#10b981" stroke-width="1" stroke-dasharray="2 2"/>
+
+            <!-- Queda após BSL sweep (SM vende após coletar liquidez) -->
+            <line x1="173" y1="100" x2="173" y2="148" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="167" y="102" width="12" height="44" fill="#ef4444" rx="1"/>
+            <line x1="195" y1="128" x2="195" y2="178" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="189" y="130" width="12" height="46" fill="#ef4444" rx="1"/>
+            <line x1="217" y1="155" x2="217" y2="205" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="211" y="157" width="12" height="46" fill="#ef4444" rx="1"/>
+
+            <!-- SWEEP SSL (spike abaixo + subida) -->
+            <line x1="247" y1="178" x2="247" y2="258" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="241" y="180" width="12" height="48" fill="#ef4444" rx="1"/>
+            <!-- Label SWEEP SSL -->
+            <rect x="190" y="262" width="110" height="18" rx="9" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)" stroke-width="0.5"/>
+            <text x="245" y="274" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">⚡ SSL SWEEP</text>
+            <line x1="247" y1="258" x2="247" y2="262" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+
+            <!-- Subida após SSL sweep (SM compra após coletar) -->
+            <line x1="267" y1="152" x2="267" y2="202" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="261" y="154" width="12" height="46" fill="#10b981" rx="1"/>
+            <line x1="289" y1="120" x2="289" y2="162" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="283" y="122" width="12" height="40" fill="#10b981" rx="1"/>
+            <line x1="311" y1="90" x2="311" y2="128" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="305" y="92" width="12" height="36" fill="#10b981" rx="1"/>
+
+            <!-- Setas direcionais -->
+            <text x="340" y="145" fill="#3b82f6" font-size="24" opacity="0.4">↑</text>
+
+            <!-- Legenda -->
+            <text x="240" y="295" text-anchor="middle" fill="#475569" font-size="7.5" letter-spacing="0.5" font-family="JetBrains Mono, monospace">SM coleta BSL → vende · SM coleta SSL → compra</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tipos de liquidez -->
+    <div class="cards-grid reveal" style="margin-top:28px">
+      <div class="concept-card" style="--c-accent:var(--gold)">
+        <span class="card-icon">🔝</span>
+        <div class="card-title">Equal Highs (EQH)</div>
+        <div class="card-desc">Duas ou mais máximas no mesmo nível. Concentração de buy stops acima delas. O SM frequentemente varre esse nível antes de reversão bearish.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--blue)">
+        <span class="card-icon">🔚</span>
+        <div class="card-title">Equal Lows (EQL)</div>
+        <div class="card-desc">Duas ou mais mínimas no mesmo nível. Concentração de sell stops abaixo delas. O SM frequentemente varre esse nível antes de reversão bullish.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--purple)">
+        <span class="card-icon">📊</span>
+        <div class="card-title">Trendline Liquidity</div>
+        <div class="card-desc">Stops colocados abaixo de linhas de tendência de alta ou acima de linhas de tendência de baixa. O SM viola a trendline brevemente para coletar esses stops antes de continuar.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--orange)">
+        <span class="card-icon">🗓️</span>
+        <div class="card-title">Old Highs & Lows</div>
+        <div class="card-desc">Máximas e mínimas de sessões anteriores (PDH, PDL, PWH, PWL, PMH, PML). São zonas de liquidez de alto valor — o SM frequentemente as usa como alvos.</div>
+      </div>
+    </div>
+
+    <div class="tip tip-red reveal">
+      <span class="tip-icon">⚠️</span>
+      <p><strong>Armadilha clássica:</strong> O retail coloca stops "óbvios" em topos e fundos anteriores, linhas de tendência e números redondos. O SM sabe disso e planeja movimentos para acionar esses stops antes de ir na direção oposta. Nunca coloque seu stop em locais óbvios.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     04 — PREMIUM & DISCOUNT
+══════════════════════════════════════════════ -->
+<section class="module module-alt" id="premium">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">04 — Premium & Discount</div>
+      <h2 class="sec-title"><span style="color:var(--gold)">Premium</span> & <span style="color:var(--bullish2)">Discount</span></h2>
+      <p class="sec-desc">O conceito de valor justo é central no SMC. O Smart Money compra em desconto e vende em prêmio — sempre em relação ao equilibrium do range vigente.</p>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <ul class="rule-list" style="--c-accent:var(--gold)">
+          <li><span class="ri">1</span>Identifique o swing high e swing low do range relevante no HTF</li>
+          <li><span class="ri">2</span>Calcule o Equilibrium (EQ) — 50% do range (nível de Fibonacci 0.5)</li>
+          <li><span class="ri">3</span>Acima do EQ = <strong>zona Premium</strong> — prefira entradas SHORT aqui</li>
+          <li><span class="ri">4</span>Abaixo do EQ = <strong>zona Discount</strong> — prefira entradas LONG aqui</li>
+          <li><span class="ri">5</span>Os melhores OBs bullish estão em Discount; os melhores OBs bearish, em Premium</li>
+          <li><span class="ri">6</span>Use Fibonacci 0.5, 0.618 e 0.786 para refinar as zonas de entrada dentro de cada região</li>
+        </ul>
+
+        <div class="tip tip-gold" style="margin-top:20px">
+          <span class="tip-icon">⚖️</span>
+          <p><strong>Regra simples:</strong> Compre em desconto, venda em prêmio. Entrar long em prêmio ou short em desconto vai contra o fluxo institucional — reduz drasticamente a probabilidade de sucesso.</p>
+        </div>
+      </div>
+
+      <!-- DIAGRAMA PREMIUM/DISCOUNT -->
+      <div class="chart-box reveal">
+        <div class="chart-bar">
+          <span class="cbar-dot" style="background:var(--gold)"></span>
+          <span class="cbar-dot" style="background:var(--bullish)"></span>
+          <span class="cbar-title">PREMIUM · EQUILIBRIUM · DISCOUNT</span>
+        </div>
+        <div class="chart-inner">
+          <svg viewBox="0 0 420 320" class="svg-resp">
+            <rect width="420" height="320" fill="#111c30"/>
+
+            <!-- === FAIXA PREMIUM === -->
+            <rect x="20" y="40" width="380" height="100" fill="rgba(239,68,68,0.05)" stroke="rgba(239,68,68,0.2)" stroke-width="0.8" rx="4"/>
+            <text x="210" y="65" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700" font-family="JetBrains Mono, monospace">⬆ PREMIUM ZONE</text>
+            <text x="210" y="80" text-anchor="middle" fill="#ef4444" font-size="8.5" opacity="0.8">Prefira SHORTS aqui</text>
+
+            <!-- Swing High (100%) -->
+            <line x1="20" y1="40" x2="400" y2="40" stroke="rgba(239,68,68,0.6)" stroke-width="1.5"/>
+            <text x="405" y="44" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">100%</text>
+            <text x="405" y="54" fill="#ef4444" font-size="7" font-family="JetBrains Mono, monospace">Swing H</text>
+
+            <!-- 0.618 retracement bearish -->
+            <line x1="20" y1="90" x2="400" y2="90" stroke="rgba(239,68,68,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+            <text x="405" y="93" fill="#ef4444" font-size="7.5" font-family="JetBrains Mono, monospace">0.618</text>
+
+            <!-- 0.786 retracement bearish -->
+            <line x1="20" y1="115" x2="400" y2="115" stroke="rgba(239,68,68,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="405" y="118" fill="#ef4444" font-size="7.5" font-family="JetBrains Mono, monospace">0.786</text>
+
+            <!-- === EQUILIBRIUM === -->
+            <line x1="20" y1="140" x2="400" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="6 3"/>
+            <rect x="155" y="130" width="110" height="20" rx="10" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)"/>
+            <text x="210" y="143" text-anchor="middle" fill="#f1f5f9" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">⚖️ EQUILIBRIUM 50%</text>
+
+            <!-- === FAIXA DISCOUNT === -->
+            <rect x="20" y="165" width="380" height="100" fill="rgba(16,185,129,0.05)" stroke="rgba(16,185,129,0.2)" stroke-width="0.8" rx="4"/>
+            <text x="210" y="190" text-anchor="middle" fill="#10b981" font-size="10" font-weight="700" font-family="JetBrains Mono, monospace">⬇ DISCOUNT ZONE</text>
+            <text x="210" y="205" text-anchor="middle" fill="#10b981" font-size="8.5" opacity="0.8">Prefira LONGS aqui</text>
+
+            <!-- 0.618 retracement bullish -->
+            <line x1="20" y1="190" x2="400" y2="190" stroke="rgba(16,185,129,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+            <text x="405" y="193" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">0.618</text>
+
+            <!-- 0.786 retracement bullish -->
+            <line x1="20" y1="215" x2="400" y2="215" stroke="rgba(16,185,129,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="405" y="218" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">0.786</text>
+
+            <!-- Swing Low (0%) -->
+            <line x1="20" y1="265" x2="400" y2="265" stroke="rgba(16,185,129,0.6)" stroke-width="1.5"/>
+            <text x="405" y="268" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">0%</text>
+            <text x="405" y="278" fill="#10b981" font-size="7" font-family="JetBrains Mono, monospace">Swing L</text>
+
+            <!-- OB exemplo em Discount -->
+            <rect x="50" y="218" width="80" height="22" fill="rgba(16,185,129,0.1)" stroke="#10b981" stroke-width="1" stroke-dasharray="3 2" rx="3"/>
+            <text x="90" y="232" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">OB Bullish ✓</text>
+
+            <!-- OB exemplo em Premium -->
+            <rect x="200" y="65" width="80" height="22" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="1" stroke-dasharray="3 2" rx="3"/>
+            <text x="240" y="79" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">OB Bearish ✓</text>
+
+            <!-- Linha divisória lateral com labels -->
+            <line x1="20" y1="40" x2="20" y2="265" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+            <text x="12" y="100" text-anchor="middle" fill="#ef4444" font-size="7.5" transform="rotate(-90,12,100)" font-family="JetBrains Mono, monospace">PREMIUM</text>
+            <text x="12" y="215" text-anchor="middle" fill="#10b981" font-size="7.5" transform="rotate(-90,12,215)" font-family="JetBrains Mono, monospace">DISCOUNT</text>
+
+            <text x="210" y="300" text-anchor="middle" fill="#475569" font-size="8" letter-spacing="0.5" font-family="JetBrains Mono, monospace">Comprar discount · Vender premium · Equilibrium = 50% Fibonacci</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     05 — ORDER BLOCKS
+══════════════════════════════════════════════ -->
+<section class="module" id="ob">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">05 — Order Blocks</div>
+      <h2 class="sec-title">Order <span style="color:var(--cyan)">Blocks</span></h2>
+      <p class="sec-desc">Order Blocks são as "impressões digitais" do Smart Money — zonas onde grandes ordens institucionais foram executadas, deixando um desequilíbrio que o preço tende a revisitar.</p>
+    </div>
+
+    <div class="two-col reverse reveal">
+      <div>
+        <ul class="rule-list" style="--c-accent:var(--cyan)">
+          <li><span class="ri">1</span><strong>OB Bullish:</strong> O último candle bearish (vermelho) antes de um impulso de alta forte. Representa onde o SM comprou. Zona de suporte institucional.</li>
+          <li><span class="ri">2</span><strong>OB Bearish:</strong> O último candle bullish (verde) antes de um impulso de baixa forte. Representa onde o SM vendeu. Zona de resistência institucional.</li>
+          <li><span class="ri">3</span><strong>Origem do OB:</strong> O OB deve ter sido criado por um movimento que gerou BOS ou CHoCH — confirma intenção direcional forte.</li>
+          <li><span class="ri">4</span><strong>Mitigação:</strong> Quando o preço retorna ao OB e "consome" as ordens restantes. Um OB mitigado perde validade progressivamente.</li>
+          <li><span class="ri">5</span><strong>OB Refinado (RB):</strong> O candle dentro do OB com o corpo mais próximo do FVG — mais preciso e com SL menor.</li>
+        </ul>
+
+        <div class="tip tip-blue" style="margin-top:20px">
+          <span class="tip-icon">🔎</span>
+          <p><strong>Identifique o OB assim:</strong> Localize o BOS ou CHoCH. Suba até o último candle de cor oposta antes do impulso. Esse é o OB. O range do OB vai da mínima à máxima desse candle.</p>
+        </div>
+      </div>
+
+      <!-- DIAGRAMA OB SVG -->
+      <div class="chart-box reveal">
+        <div class="chart-bar">
+          <span class="cbar-dot" style="background:var(--bullish)"></span>
+          <span class="cbar-dot" style="background:var(--bearish)"></span>
+          <span class="cbar-title">ORDER BLOCKS — BULLISH & BEARISH</span>
+          <span class="cbar-badge" style="background:rgba(0,212,255,0.1);color:var(--cyan)">OB</span>
+        </div>
+        <div class="chart-inner">
+          <svg viewBox="0 0 480 340" class="svg-resp">
+            <rect width="480" height="340" fill="#111c30"/>
+
+            <!-- === OB BULLISH (baixo) === -->
+            <!-- Label -->
+            <text x="110" y="18" text-anchor="middle" fill="#10b981" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">OB BULLISH ✓</text>
+
+            <!-- Tendência de baixa antes -->
+            <line x1="20" y1="100" x2="20" y2="130" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="14" y="102" width="12" height="26" fill="#ef4444" rx="1"/>
+            <line x1="40" y1="120" x2="40" y2="158" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="34" y="122" width="12" height="34" fill="#ef4444" rx="1"/>
+            <line x1="60" y1="145" x2="60" y2="185" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="54" y="147" width="12" height="36" fill="#ef4444" rx="1"/>
+
+            <!-- Sweep SSL -->
+            <line x1="80" y1="168" x2="80" y2="218" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="74" y="190" width="12" height="26" fill="#ef4444" rx="1"/>
+            <text x="80" y="230" text-anchor="middle" fill="#ef4444" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">sweep</text>
+
+            <!-- OB BULLISH candle (último vermelho antes do impulso) -->
+            <rect x="97" y="178" width="200" height="32" fill="rgba(16,185,129,0.07)" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4 2" rx="2"/>
+            <line x1="102" y1="170" x2="102" y2="215" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="96" y="178" width="14" height="32" fill="#ef4444" rx="2"/>
+            <text x="102" y="165" text-anchor="middle" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">OB BULLISH</text>
+
+            <!-- FVG após OB -->
+            <rect x="118" y="145" width="62" height="26" fill="rgba(168,85,247,0.08)" stroke="rgba(168,85,247,0.35)" stroke-width="0.8" stroke-dasharray="2 2" rx="2"/>
+            <text x="149" y="161" text-anchor="middle" fill="#a855f7" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">FVG</text>
+
+            <!-- Impulso bullish -->
+            <line x1="120" y1="140" x2="120" y2="180" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="114" y="142" width="12" height="36" fill="#10b981" rx="1"/>
+            <line x1="140" y1="108" x2="140" y2="148" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="134" y="110" width="12" height="36" fill="#10b981" rx="1"/>
+            <line x1="160" y1="80" x2="160" y2="116" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="154" y="82" width="12" height="32" fill="#10b981" rx="1"/>
+
+            <!-- BOS bullish -->
+            <line x1="95" y1="248" x2="175" y2="248" stroke="rgba(16,185,129,0.5)" stroke-width="1.2" stroke-dasharray="4 2"/>
+            <text x="135" y="261" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BOS ↑</text>
+
+            <!-- Retorno ao OB bullish -->
+            <path d="M172 82 Q185 150 200 178" fill="none" stroke="rgba(16,185,129,0.5)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <text x="188" y="145" fill="#10b981" font-size="8" font-weight="600" font-family="JetBrains Mono, monospace">retorno</text>
+
+            <!-- Trigger no OB bullish -->
+            <line x1="205" y1="172" x2="205" y2="215" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="199" y="178" width="12" height="32" fill="#10b981" rx="2"/>
+            <text x="205" y="167" text-anchor="middle" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">TRIGGER</text>
+
+            <!-- === DIVISÓRIA === -->
+            <line x1="250" y1="10" x2="250" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4 4"/>
+
+            <!-- === OB BEARISH (direita) === -->
+            <text x="368" y="18" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">OB BEARISH ✓</text>
+
+            <!-- Tendência de alta antes -->
+            <line x1="262" y1="240" x2="262" y2="212" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="256" y="214" width="12" height="24" fill="#10b981" rx="1"/>
+            <line x1="282" y1="220" x2="282" y2="190" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="276" y="192" width="12" height="26" fill="#10b981" rx="1"/>
+            <line x1="302" y1="198" x2="302" y2="165" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="296" y="167" width="12" height="30" fill="#10b981" rx="1"/>
+
+            <!-- Sweep BSL -->
+            <line x1="322" y1="148" x2="322" y2="100" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="316" y="100" width="12" height="26" fill="#10b981" rx="1"/>
+            <text x="322" y="90" text-anchor="middle" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">sweep</text>
+
+            <!-- OB BEARISH candle (último verde antes do impulso) -->
+            <rect x="338" y="115" width="135" height="32" fill="rgba(239,68,68,0.07)" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4 2" rx="2"/>
+            <line x1="343" y1="105" x2="343" y2="152" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="337" y="115" width="14" height="32" fill="#10b981" rx="2"/>
+            <text x="343" y="100" text-anchor="middle" fill="#ef4444" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">OB BEARISH</text>
+
+            <!-- FVG após OB bearish -->
+            <rect x="359" y="142" width="62" height="26" fill="rgba(168,85,247,0.08)" stroke="rgba(168,85,247,0.35)" stroke-width="0.8" stroke-dasharray="2 2" rx="2"/>
+            <text x="390" y="158" text-anchor="middle" fill="#a855f7" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">FVG</text>
+
+            <!-- Impulso bearish -->
+            <line x1="363" y1="154" x2="363" y2="115" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="357" y="153" width="12" height="38" fill="#ef4444" rx="1"/>
+            <line x1="383" y1="185" x2="383" y2="155" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="377" y="155" width="12" height="30" fill="#ef4444" rx="1"/>
+            <line x1="403" y1="214" x2="403" y2="186" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="397" y="186" width="12" height="26" fill="#ef4444" rx="1"/>
+
+            <!-- BOS bearish -->
+            <line x1="338" y1="60" x2="420" y2="60" stroke="rgba(239,68,68,0.5)" stroke-width="1.2" stroke-dasharray="4 2"/>
+            <text x="380" y="52" text-anchor="middle" fill="#ef4444" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BOS ↓</text>
+
+            <!-- Retorno ao OB bearish -->
+            <path d="M405 218 Q420 155 440 131" fill="none" stroke="rgba(239,68,68,0.5)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <text x="432" y="175" fill="#ef4444" font-size="8" font-weight="600" font-family="JetBrains Mono, monospace">retorno</text>
+
+            <!-- Trigger no OB bearish -->
+            <line x1="450" y1="108" x2="450" y2="152" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="444" y="115" width="12" height="32" fill="#ef4444" rx="2"/>
+            <text x="450" y="103" text-anchor="middle" fill="#ef4444" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">TRIGGER</text>
+
+            <!-- Legenda -->
+            <text x="240" y="308" text-anchor="middle" fill="#475569" font-size="8" letter-spacing="0.5" font-family="JetBrains Mono, monospace">OB = último candle oposto antes do impulso + BOS/CHoCH</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tipos especiais de OB -->
+    <div class="cards-grid reveal" style="margin-top:28px">
+      <div class="concept-card" style="--c-accent:var(--cyan)">
+        <span class="card-icon">🏆</span>
+        <div class="card-title">OB Premium (com FVG)</div>
+        <div class="card-desc">OB com Fair Value Gap imediatamente após o impulso de saída. A presença de FVG confirma urgência institucional e cria um magnetismo duplo — o FVG atrai o preço de volta e o OB fornece a reação.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--orange)">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">Refined OB (RB)</div>
+        <div class="card-desc">Refinamento do OB para o candle interno com o corpo mais alto (OB bearish) ou mais baixo (OB bullish). Diminui o range de entrada, melhora o R:R e reduz o SL necessário.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--purple)">
+        <span class="card-icon">🔄</span>
+        <div class="card-title">Breaker Block</div>
+        <div class="card-desc">Um OB que foi completamente mitigado (preço passou por ele) e depois inverteu novamente. O antigo OB bullish mitigado se torna resistência — o Breaker Block. Conceito avançado do ICT.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--pink)">
+        <span class="card-icon">🕳️</span>
+        <div class="card-title">Propulsion Block</div>
+        <div class="card-desc">Gap ou FVG imediatamente antes de um OB, criando uma zona de propulsão. Quando o preço retorna a essa área, a combinação de FVG + OB gera reações mais agressivas e confiáveis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     06 — FVG
+══════════════════════════════════════════════ -->
+<section class="module module-alt" id="fvg">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">06 — Fair Value Gap</div>
+      <h2 class="sec-title">Fair Value <span style="color:var(--purple2)">Gap</span></h2>
+      <p class="sec-desc">O FVG (ou Imbalance) é uma lacuna de desequilíbrio criada quando o mercado se move tão rápido que não há negociações em ambos os lados do preço. O mercado tende a retornar para "preencher" essa lacuna.</p>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <div class="cards-grid" style="grid-template-columns:1fr;gap:12px">
+          <div class="concept-card" style="--c-accent:var(--bullish)">
+            <span class="card-icon">🟢</span>
+            <div class="card-title">FVG Bullish</div>
+            <div class="card-desc">Criado em impulso de alta: a mínima do 3º candle é maior que a máxima do 1º candle — há uma lacuna entre eles (candle 2 é o central). O mercado tende a retornar e preencher antes de continuar para cima.</div>
+          </div>
+          <div class="concept-card" style="--c-accent:var(--bearish)">
+            <span class="card-icon">🔴</span>
+            <div class="card-title">FVG Bearish</div>
+            <div class="card-desc">Criado em impulso de baixa: a máxima do 3º candle é menor que a mínima do 1º candle — há uma lacuna entre eles. O mercado tende a retornar para preencher antes de continuar para baixo.</div>
+          </div>
+          <div class="concept-card" style="--c-accent:var(--gold)">
+            <span class="card-icon">✅</span>
+            <div class="card-title">FVG vs IFVG</div>
+            <div class="card-desc"><strong>FVG (válido):</strong> ainda não foi preenchido. <strong>IFVG (Inverse FVG):</strong> FVG já preenchido que agora funciona como suporte/resistência invertida — o nível 50% do FVG original se torna a zona de reação.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIAGRAMA FVG -->
+      <div class="chart-box reveal">
+        <div class="chart-bar">
+          <span class="cbar-dot" style="background:var(--purple)"></span>
+          <span class="cbar-dot" style="background:var(--gold)"></span>
+          <span class="cbar-title">FVG — IDENTIFICAÇÃO E USO</span>
+          <span class="cbar-badge" style="background:rgba(168,85,247,0.1);color:var(--purple2)">IMBALANCE</span>
+        </div>
+        <div class="chart-inner">
+          <svg viewBox="0 0 480 300" class="svg-resp">
+            <rect width="480" height="300" fill="#111c30"/>
+
+            <!-- === FVG BULLISH === -->
+            <text x="100" y="18" text-anchor="middle" fill="#10b981" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">FVG BULLISH</text>
+
+            <!-- Candles antes do FVG (caindo) -->
+            <line x1="22" y1="200" x2="22" y2="240" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="16" y="202" width="12" height="36" fill="#ef4444" rx="1"/>
+            <line x1="42" y1="218" x2="42" y2="258" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="36" y="220" width="12" height="36" fill="#ef4444" rx="1"/>
+
+            <!-- 3 candles do FVG bullish -->
+            <!-- Candle 1 (verde, mínima ref) -->
+            <line x1="62" y1="198" x2="62" y2="248" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="56" y="200" width="12" height="44" fill="#10b981" rx="1"/>
+            <text x="62" y="192" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">C1</text>
+
+            <!-- FVG gap highlighted -->
+            <rect x="75" y="170" width="48" height="32" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.5)" stroke-width="1.2" rx="2"/>
+            <text x="99" y="189" text-anchor="middle" fill="#a855f7" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">FVG</text>
+            <!-- Setas mostrando o gap -->
+            <line x1="72" y1="200" x2="78" y2="200" stroke="rgba(168,85,247,0.6)" stroke-width="1"/>
+            <line x1="72" y1="170" x2="78" y2="170" stroke="rgba(168,85,247,0.6)" stroke-width="1"/>
+            <line x1="75" y1="175" x2="75" y2="195" stroke="rgba(168,85,247,0.6)" stroke-width="1" marker-end="none"/>
+
+            <!-- Candle 2 (candle impulsivo central) -->
+            <line x1="78" y1="155" x2="78" y2="210" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="72" y="157" width="12" height="50" fill="#10b981" rx="1"/>
+            <text x="78" y="148" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">C2</text>
+
+            <!-- Candle 3 (verde, máxima ref — mínima > máxima C1) -->
+            <line x1="98" y1="138" x2="98" y2="178" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="92" y="140" width="12" height="36" fill="#10b981" rx="1"/>
+            <text x="98" y="131" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">C3</text>
+
+            <!-- Linhas ref FVG (máx C1 e mín C3) -->
+            <line x1="56" y1="200" x2="130" y2="200" stroke="rgba(168,85,247,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <line x1="92" y1="170" x2="130" y2="170" stroke="rgba(168,85,247,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <text x="135" y="187" fill="#a855f7" font-size="7.5" font-family="JetBrains Mono, monospace">gap</text>
+
+            <!-- Continuação de alta -->
+            <line x1="116" y1="120" x2="116" y2="148" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="110" y="122" width="12" height="26" fill="#10b981" rx="1"/>
+            <line x1="136" y1="98" x2="136" y2="128" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="130" y="100" width="12" height="28" fill="#10b981" rx="1"/>
+
+            <!-- Retorno ao FVG (preenchimento) -->
+            <path d="M140 100 Q165 100 170 171" fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="168" y="140" fill="#a855f7" font-size="8" font-family="JetBrains Mono, monospace">retorno</text>
+
+            <!-- Reação no FVG -->
+            <line x1="173" y1="162" x2="173" y2="200" stroke="#10b981" stroke-width="1.8"/>
+            <rect x="167" y="172" width="12" height="24" fill="#10b981" rx="2"/>
+            <text x="173" y="157" text-anchor="middle" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">REAÇÃO</text>
+
+            <!-- === DIVISÓRIA === -->
+            <line x1="240" y1="10" x2="240" y2="285" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4 4"/>
+
+            <!-- === FVG BEARISH === -->
+            <text x="360" y="18" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">FVG BEARISH</text>
+
+            <!-- Candles antes do FVG (subindo) -->
+            <line x1="258" y1="100" x2="258" y2="142" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="252" y="102" width="12" height="38" fill="#10b981" rx="1"/>
+            <line x1="278" y1="82" x2="278" y2="122" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="272" y="84" width="12" height="36" fill="#10b981" rx="1"/>
+
+            <!-- 3 candles do FVG bearish -->
+            <line x1="298" y1="72" x2="298" y2="122" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="292" y="74" width="12" height="44" fill="#ef4444" rx="1"/>
+            <text x="298" y="65" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">C1</text>
+
+            <!-- FVG bearish gap -->
+            <rect x="311" y="100" width="48" height="32" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.5)" stroke-width="1.2" rx="2"/>
+            <text x="335" y="119" text-anchor="middle" fill="#a855f7" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">FVG</text>
+
+            <line x1="314" y1="118" x2="314" y2="148" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="308" y="120" width="12" height="52" fill="#ef4444" rx="1"/>
+            <text x="314" y="112" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">C2</text>
+
+            <line x1="334" y1="138" x2="334" y2="182" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="328" y="140" width="12" height="40" fill="#ef4444" rx="1"/>
+            <text x="334" y="131" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">C3</text>
+
+            <!-- Linhas ref -->
+            <line x1="292" y1="118" x2="370" y2="118" stroke="rgba(168,85,247,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <line x1="328" y1="100" x2="370" y2="100" stroke="rgba(168,85,247,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <text x="375" y="111" fill="#a855f7" font-size="7.5" font-family="JetBrains Mono, monospace">gap</text>
+
+            <!-- Continuação de baixa -->
+            <line x1="352" y1="172" x2="352" y2="200" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="346" y="174" width="12" height="24" fill="#ef4444" rx="1"/>
+            <line x1="372" y1="192" x2="372" y2="222" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="366" y="194" width="12" height="26" fill="#ef4444" rx="1"/>
+
+            <!-- Retorno ao FVG bearish -->
+            <path d="M376 222 Q400 200 404 118" fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="412" y="175" fill="#a855f7" font-size="8" font-family="JetBrains Mono, monospace">retorno</text>
+
+            <!-- Reação no FVG bearish -->
+            <line x1="410" y1="98" x2="410" y2="140" stroke="#ef4444" stroke-width="1.8"/>
+            <rect x="404" y="100" width="12" height="36" fill="#ef4444" rx="2"/>
+            <text x="410" y="92" text-anchor="middle" fill="#ef4444" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">REAÇÃO</text>
+
+            <text x="240" y="285" text-anchor="middle" fill="#475569" font-size="8" letter-spacing="0.5" font-family="JetBrains Mono, monospace">Mín(C3) > Máx(C1) = FVG Bullish · Máx(C3) &lt; Mín(C1) = FVG Bearish</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip tip-blue reveal">
+      <span class="tip-icon">💡</span>
+      <p><strong>FVG como alvo:</strong> O FVG é magnetismo de preço. Além de servir como zona de entrada (quando o preço retorna), FVGs à frente do preço servem como alvos naturais para saídas parciais. Identifique todos os FVGs entre a entrada e o alvo final.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     07 — KILL ZONES
+══════════════════════════════════════════════ -->
+<section class="module" id="killzones">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">07 — Kill Zones</div>
+      <h2 class="sec-title">Kill <span style="color:var(--orange)">Zones</span></h2>
+      <p class="sec-desc">Kill Zones são janelas de tempo onde a atividade institucional é máxima. Operar fora delas significa operar em ambiente de menor liquidez e maior aleatoriedade. A precisão dos setups SMC multiplica dentro dessas janelas.</p>
+    </div>
+
+    <div class="kz-grid reveal">
+      <div class="kz-card">
+        <span class="kz-icon">🌙</span>
+        <div class="kz-name">Asia Kill Zone</div>
+        <div class="kz-time">00:00 – 04:00 UTC</div>
+        <div class="kz-brt">21:00 – 01:00 BRT</div>
+        <div class="kz-desc">Define os extremos do dia asiático. BSL e SSL criados nessa sessão são alvos frequentes nas sessões de Londres e NY. Range geralmente estreito.</div>
+        <div class="kz-bar" style="background:linear-gradient(90deg,rgba(148,163,184,0.4),rgba(148,163,184,0.1))"></div>
+      </div>
+      <div class="kz-card">
+        <span class="kz-icon">🌅</span>
+        <div class="kz-name">London Open KZ</div>
+        <div class="kz-time">07:00 – 10:00 UTC</div>
+        <div class="kz-brt">04:00 – 07:00 BRT</div>
+        <div class="kz-desc">Uma das janelas mais importantes. O SM frequentemente manipula o mercado (faz sweep da Ásia) e depois lança o verdadeiro movimento. Alta probabilidade de setups limpos.</div>
+        <div class="kz-bar" style="background:linear-gradient(90deg,var(--blue),var(--bullish))"></div>
+      </div>
+      <div class="kz-card" style="border-color:rgba(245,200,66,0.2);background:rgba(245,200,66,0.03)">
+        <span class="kz-icon">🌞</span>
+        <div class="kz-name">NY Open KZ ⭐</div>
+        <div class="kz-time">12:00 – 15:00 UTC</div>
+        <div class="kz-brt">09:00 – 12:00 BRT</div>
+        <div class="kz-desc">A kill zone de maior volume do mundo. Sobreposição Londres-NY gera os maiores movimentos do dia. Setups SMC têm máxima precisão. SL menores, movimentos maiores.</div>
+        <div class="kz-bar" style="background:linear-gradient(90deg,var(--gold),var(--orange))"></div>
+      </div>
+      <div class="kz-card" style="border-color:rgba(249,115,22,0.2);background:rgba(249,115,22,0.03)">
+        <span class="kz-icon">🌆</span>
+        <div class="kz-name">NY PM Kill Zone</div>
+        <div class="kz-time">19:00 – 20:00 UTC</div>
+        <div class="kz-brt">16:00 – 17:00 BRT</div>
+        <div class="kz-desc">Final do dia americano. Menor volatilidade, mas movimentos de reversão são comuns. Usado para scalps de final de sessão e encerramento de posições abertas.</div>
+        <div class="kz-bar" style="background:linear-gradient(90deg,var(--orange),rgba(249,115,22,0.2))"></div>
+      </div>
+    </div>
+
+    <!-- Timeline visual das Kill Zones -->
+    <div class="chart-box reveal" style="margin-top:32px">
+      <div class="chart-bar">
+        <span class="cbar-dot" style="background:var(--gold)"></span>
+        <span class="cbar-title">LINHA DO TEMPO DAS KILL ZONES (UTC)</span>
+      </div>
+      <div class="chart-inner">
+        <svg viewBox="0 0 700 90" class="svg-resp">
+          <rect width="700" height="90" fill="#111c30"/>
+
+          <!-- Hora escala (0–24h em UTC) -->
+          <!-- Total: 24h = 660px (10–670) -->
+
+          <!-- Asia KZ: 00–04h = 0–160px -->
+          <rect x="10" y="30" width="110" height="30" fill="rgba(148,163,184,0.12)" stroke="rgba(148,163,184,0.3)" stroke-width="0.8" rx="4"/>
+          <text x="65" y="48" text-anchor="middle" fill="#94a3b8" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">🌙 ASIA KZ</text>
+          <text x="65" y="58" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">00–04h UTC</text>
+
+          <!-- London KZ: 07–10h -->
+          <rect x="202" y="30" width="82" height="30" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.4)" stroke-width="0.8" rx="4"/>
+          <text x="243" y="48" text-anchor="middle" fill="#60a5fa" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">🌅 LON</text>
+          <text x="243" y="58" text-anchor="middle" fill="#60a5fa" font-size="7" font-family="JetBrains Mono, monospace">07–10h</text>
+
+          <!-- NY Open KZ: 12–15h -->
+          <rect x="340" y="22" width="82" height="46" fill="rgba(245,200,66,0.12)" stroke="rgba(245,200,66,0.5)" stroke-width="1.2" rx="4"/>
+          <text x="381" y="43" text-anchor="middle" fill="#f5c842" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">🌞 NY ⭐</text>
+          <text x="381" y="57" text-anchor="middle" fill="#f5c842" font-size="7" font-family="JetBrains Mono, monospace">12–15h UTC</text>
+
+          <!-- NY PM: 19–20h -->
+          <rect x="533" y="30" width="55" height="30" fill="rgba(249,115,22,0.1)" stroke="rgba(249,115,22,0.3)" stroke-width="0.8" rx="4"/>
+          <text x="560" y="48" text-anchor="middle" fill="#f97316" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">🌆 PM</text>
+          <text x="560" y="58" text-anchor="middle" fill="#f97316" font-size="7" font-family="JetBrains Mono, monospace">19–20h</text>
+
+          <!-- Linha do tempo base -->
+          <line x1="10" y1="75" x2="690" y2="75" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+          <!-- Marcadores de hora -->
+          <text x="10"  y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">0h</text>
+          <text x="92"  y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">3h</text>
+          <text x="175" y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">6h</text>
+          <text x="257" y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">9h</text>
+          <text x="340" y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">12h</text>
+          <text x="422" y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">15h</text>
+          <text x="505" y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">18h</text>
+          <text x="588" y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">21h</text>
+          <text x="665" y="86" fill="#475569" font-size="7" font-family="JetBrains Mono, monospace">24h</text>
+
+          <!-- tick marks -->
+          <line x1="92"  y1="72" x2="92"  y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <line x1="175" y1="72" x2="175" y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <line x1="257" y1="72" x2="257" y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <line x1="340" y1="72" x2="340" y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <line x1="422" y1="72" x2="422" y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <line x1="505" y1="72" x2="505" y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <line x1="588" y1="72" x2="588" y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="tip tip-gold reveal">
+      <span class="tip-icon">⏰</span>
+      <p><strong>Regra das Kill Zones:</strong> Aguarde setups SMC apenas dentro das Kill Zones. Fora dessas janelas, o mercado é "alimentado" por algoritmos e ordens de baixa relevância — a precisão cai significativamente e os stop hunts são menos previsíveis.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     08 — CTZ COMPLETO
+══════════════════════════════════════════════ -->
+<section class="module module-alt2" id="ctz">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">08 — Metodologia CTZ</div>
+      <h2 class="sec-title">CTZ — <span style="color:var(--bullish2)">Confirmação Completa</span></h2>
+      <p class="sec-desc">CTZ é o sistema de três filtros que qualifica Order Blocks antes da entrada. É o filtro final — combina estrutura, tempo e qualidade de zona para garantir que apenas setups de alta probabilidade sejam operados.</p>
+    </div>
+
+    <!-- CTZ Hero Overview -->
+    <div class="ctz-hero reveal">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap">
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;letter-spacing:3px;color:var(--text)">O SISTEMA CTZ</h3>
+        <span style="padding:4px 14px;border-radius:20px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);font-size:0.72rem;font-weight:700;color:var(--bullish2);font-family:var(--font-mono);letter-spacing:1px">TODOS OS 3 DEVEM SER ✓</span>
+      </div>
+      <p style="font-size:0.93rem;color:var(--muted);line-height:1.7;max-width:680px">
+        Um Order Block só é operável quando C, T e Z estão simultaneamente confirmados.
+        A ausência de qualquer pilar — mesmo que os outros dois sejam perfeitos — invalida a entrada.
+        Disciplina no CTZ é o que separa o trader consistente do impulsivo.
+      </p>
+      <div class="ctz-pillars">
+        <div class="ctz-pillar" data-p="C">
+          <div class="ctz-letter">C</div>
+          <div class="ctz-pname">Candle / Contexto</div>
+          <div class="ctz-pdesc">O candle de origem do OB deve ter corpo forte (≥60%), ser seguido de BOS/CHoCH e gerar FVG de saída. Candles doji ou com sombras dominantes são descartados.</div>
+        </div>
+        <div class="ctz-pillar" data-p="T">
+          <div class="ctz-letter">T</div>
+          <div class="ctz-pname">Time / Tempo</div>
+          <div class="ctz-pdesc">O OB deve estar alinhado com a tendência do HTF. O preço deve estar em zona Premium (shorts) ou Discount (longs). Operar dentro de Kill Zone ativa.</div>
+        </div>
+        <div class="ctz-pillar" data-p="Z">
+          <div class="ctz-letter">Z</div>
+          <div class="ctz-pname">Zone / Zona</div>
+          <div class="ctz-pdesc">A zona não foi mitigada (primeira visita). Presença de FVG adjacente. Houve liquidity sweep anterior. Zona compacta e bem definida.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIAGRAMA CTZ TRIÂNGULO SVG -->
+    <div class="chart-box reveal" style="margin-bottom:32px">
+      <div class="chart-bar">
+        <span class="cbar-dot" style="background:var(--ctz-c)"></span>
+        <span class="cbar-dot" style="background:var(--ctz-t)"></span>
+        <span class="cbar-dot" style="background:var(--ctz-z)"></span>
+        <span class="cbar-title">DIAGRAMA CTZ — TRIÂNGULO DOS TRÊS PILARES</span>
+        <span class="cbar-badge" style="background:rgba(16,185,129,0.1);color:var(--bullish2)">CONFLUÊNCIA</span>
+      </div>
+      <div class="chart-inner">
+        <svg viewBox="0 0 680 320" class="svg-resp">
+          <defs>
+            <filter id="gc"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="gt"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="gz"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect width="680" height="320" fill="#111c30"/>
+
+          <!-- Fundo grid -->
+          <defs>
+            <pattern id="smcgrid" width="32" height="32" patternUnits="userSpaceOnUse">
+              <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="680" height="320" fill="url(#smcgrid)"/>
+
+          <!-- Triângulo preenchido -->
+          <polygon points="340,24 88,285 592,285" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+          <!-- Linhas do triângulo -->
+          <line x1="340" y1="24" x2="88"  y2="285" stroke="#00d4ff" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.45"/>
+          <line x1="340" y1="24" x2="592" y2="285" stroke="#f5c842" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.45"/>
+          <line x1="88"  y1="285" x2="592" y2="285" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.45"/>
+
+          <!-- Conexões ao centro -->
+          <line x1="340" y1="24"  x2="340" y2="178" stroke="rgba(0,212,255,0.12)"  stroke-width="1"/>
+          <line x1="88"  y1="285" x2="340" y2="178" stroke="rgba(245,200,66,0.12)" stroke-width="1"/>
+          <line x1="592" y1="285" x2="340" y2="178" stroke="rgba(16,185,129,0.12)" stroke-width="1"/>
+
+          <!-- CENTRO -->
+          <circle cx="340" cy="178" r="46" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <circle cx="340" cy="178" r="30" fill="rgba(255,255,255,0.035)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <text x="340" y="173" text-anchor="middle" fill="#f5c842" font-size="13" font-weight="700" font-family="JetBrains Mono, monospace" letter-spacing="2">CTZ</text>
+          <text x="340" y="188" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="JetBrains Mono, monospace">VÁLIDO</text>
+
+          <!-- PILAR C — TOPO -->
+          <circle cx="340" cy="24" r="38" fill="#111c30" stroke="#00d4ff" stroke-width="2" filter="url(#gc)"/>
+          <text x="340" y="17" text-anchor="middle" fill="#00d4ff" font-size="22" font-weight="900" font-family="'Bebas Neue',sans-serif" letter-spacing="1">C</text>
+          <text x="340" y="36" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace" letter-spacing="1">CANDLE</text>
+
+          <!-- Info C -->
+          <rect x="244" y="46" width="192" height="52" rx="8" fill="rgba(0,212,255,0.04)" stroke="rgba(0,212,255,0.15)" stroke-width="0.8"/>
+          <text x="340" y="66" text-anchor="middle" fill="#f1f5f9" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">Corpo forte ≥ 60%</text>
+          <text x="340" y="78" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace">BOS / CHoCH confirmado</text>
+          <text x="340" y="89" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace">FVG de saída presente</text>
+
+          <!-- PILAR T — ESQ BAIXO -->
+          <circle cx="88" cy="285" r="38" fill="#111c30" stroke="#f5c842" stroke-width="2" filter="url(#gt)"/>
+          <text x="88" y="278" text-anchor="middle" fill="#f5c842" font-size="22" font-weight="900" font-family="'Bebas Neue',sans-serif" letter-spacing="1">T</text>
+          <text x="88" y="297" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace" letter-spacing="1">TEMPO</text>
+
+          <!-- Info T -->
+          <rect x="4" y="208" width="178" height="52" rx="8" fill="rgba(245,200,66,0.04)" stroke="rgba(245,200,66,0.15)" stroke-width="0.8"/>
+          <text x="93" y="228" text-anchor="middle" fill="#f1f5f9" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">Alinhado ao HTF</text>
+          <text x="93" y="240" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace">Premium / Discount ✓</text>
+          <text x="93" y="252" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace">Dentro de Kill Zone</text>
+
+          <!-- PILAR Z — DIR BAIXO -->
+          <circle cx="592" cy="285" r="38" fill="#111c30" stroke="#10b981" stroke-width="2" filter="url(#gz)"/>
+          <text x="592" y="278" text-anchor="middle" fill="#10b981" font-size="22" font-weight="900" font-family="'Bebas Neue',sans-serif" letter-spacing="1">Z</text>
+          <text x="592" y="297" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace" letter-spacing="1">ZONA</text>
+
+          <!-- Info Z -->
+          <rect x="498" y="208" width="178" height="52" rx="8" fill="rgba(16,185,129,0.04)" stroke="rgba(16,185,129,0.15)" stroke-width="0.8"/>
+          <text x="587" y="228" text-anchor="middle" fill="#f1f5f9" font-size="9" font-weight="700" font-family="JetBrains Mono, monospace">Zona não mitigada</text>
+          <text x="587" y="240" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace">FVG + Sweep anterior ✓</text>
+          <text x="587" y="252" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="JetBrains Mono, monospace">Zona compacta definida</text>
+
+          <text x="340" y="310" text-anchor="middle" fill="#3d5478" font-size="8" letter-spacing="1" font-family="JetBrains Mono, monospace">OS TRÊS PILARES DEVEM ESTAR SIMULTANEAMENTE CONFIRMADOS</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- CTZ — Diagramas detalhados por pilar -->
+    <div class="two-col reveal" style="gap:24px;margin-bottom:28px">
+
+      <!-- PILAR C diagrama -->
+      <div class="chart-box">
+        <div class="chart-bar">
+          <span class="cbar-dot" style="background:var(--ctz-c)"></span>
+          <span class="cbar-title">PILAR C — CANDLE DE ORIGEM</span>
+          <span class="cbar-badge" style="background:rgba(0,212,255,0.1);color:var(--ctz-c)">C</span>
+        </div>
+        <div class="chart-inner">
+          <svg viewBox="0 0 380 260" class="svg-resp">
+            <rect width="380" height="260" fill="#111c30"/>
+
+            <!-- Label título -->
+            <text x="90" y="18" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">✕ INVÁLIDO</text>
+            <text x="290" y="18" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">✓ VÁLIDO</text>
+            <line x1="190" y1="10" x2="190" y2="240" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4 4"/>
+
+            <!-- INVÁLIDO: doji (corpo mínimo) -->
+            <line x1="55" y1="80" x2="55" y2="175" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="48" y="122" width="14" height="8" fill="#ef4444" rx="1"/>
+            <text x="55" y="195" text-anchor="middle" fill="#ef4444" font-size="8" font-family="JetBrains Mono, monospace">doji</text>
+            <text x="55" y="207" text-anchor="middle" fill="#ef4444" font-size="7.5" font-family="JetBrains Mono, monospace">corpo &lt;30%</text>
+
+            <!-- INVÁLIDO: wick dominante -->
+            <line x1="110" y1="70" x2="110" y2="185" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="103" y="135" width="14" height="18" fill="#ef4444" rx="1"/>
+            <text x="110" y="195" text-anchor="middle" fill="#ef4444" font-size="8" font-family="JetBrains Mono, monospace">pin bar</text>
+            <text x="110" y="207" text-anchor="middle" fill="#ef4444" font-size="7.5" font-family="JetBrains Mono, monospace">sombra domina</text>
+
+            <!-- Cruz vermelha na esq -->
+            <text x="85" y="238" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="900" opacity="0.4">✕ DESCARTAR</text>
+
+            <!-- VÁLIDO: marubozu (corpo dominante) -->
+            <line x1="245" y1="92" x2="245" y2="96" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="238" y="96" width="14" height="70" fill="#10b981" rx="1"/>
+            <line x1="245" y1="166" x2="245" y2="170" stroke="#10b981" stroke-width="1.5"/>
+            <text x="245" y="195" text-anchor="middle" fill="#10b981" font-size="8" font-family="JetBrains Mono, monospace">marubozu</text>
+            <text x="245" y="207" text-anchor="middle" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">corpo ≥80%</text>
+
+            <!-- VÁLIDO: corpo forte com sombra pequena -->
+            <line x1="300" y1="88" x2="300" y2="98" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="293" y="98" width="14" height="60" fill="#10b981" rx="1"/>
+            <line x1="300" y1="158" x2="300" y2="170" stroke="#10b981" stroke-width="1.5"/>
+            <text x="300" y="195" text-anchor="middle" fill="#10b981" font-size="8" font-family="JetBrains Mono, monospace">forte</text>
+            <text x="300" y="207" text-anchor="middle" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">corpo ≥60%</text>
+
+            <!-- Check verde na dir -->
+            <text x="277" y="238" text-anchor="middle" fill="#10b981" font-size="11" font-weight="900" opacity="0.4">✓ OPERÁVEL</text>
+
+            <!-- Linha divisória de 60% corpo -->
+            <text x="300" y="75" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="JetBrains Mono, monospace">pequena sombra</text>
+            <text x="55" y="68" text-anchor="middle" fill="#ef4444" font-size="7" font-family="JetBrains Mono, monospace">grande sombra</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- PILAR Z diagrama -->
+      <div class="chart-box">
+        <div class="chart-bar">
+          <span class="cbar-dot" style="background:var(--ctz-z)"></span>
+          <span class="cbar-title">PILAR Z — ZONA LIMPA vs MITIGADA</span>
+          <span class="cbar-badge" style="background:rgba(16,185,129,0.1);color:var(--ctz-z)">Z</span>
+        </div>
+        <div class="chart-inner">
+          <svg viewBox="0 0 380 260" class="svg-resp">
+            <rect width="380" height="260" fill="#111c30"/>
+
+            <text x="90" y="18" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">✕ MITIGADO</text>
+            <text x="290" y="18" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="700" font-family="JetBrains Mono, monospace">✓ LIMPO</text>
+            <line x1="190" y1="10" x2="190" y2="245" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4 4"/>
+
+            <!-- MITIGADO: zona já visitada -->
+            <!-- OB zona esq -->
+            <rect x="20" y="108" width="155" height="24" fill="rgba(239,68,68,0.06)" stroke="#ef4444" stroke-width="0.8" stroke-dasharray="3 2" rx="2"/>
+            <text x="97" y="123" text-anchor="middle" fill="#ef4444" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">OB BEARISH</text>
+
+            <!-- Candle OB esq -->
+            <line x1="35" y1="98" x2="35" y2="138" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="28" y="108" width="12" height="24" fill="#ef4444" rx="1"/>
+            <!-- Impulso de baixa -->
+            <line x1="53" y1="72" x2="53" y2="112" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="46" y="74" width="12" height="36" fill="#ef4444" rx="1"/>
+            <line x1="71" y1="54" x2="71" y2="78" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="64" y="56" width="12" height="22" fill="#ef4444" rx="1"/>
+
+            <!-- Retorno e mitigação -->
+            <path d="M77 56 Q110 30 120 108" fill="none" stroke="rgba(239,68,68,0.4)" stroke-width="1.2" stroke-dasharray="4 3"/>
+            <!-- Candle que mitiga (verde passa pela zona) -->
+            <line x1="123" y1="95" x2="123" y2="142" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="116" y="108" width="12" height="28" fill="#10b981" rx="1"/>
+            <text x="123" y="158" text-anchor="middle" fill="#ef4444" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">↑ MITIGADO</text>
+
+            <!-- X grande esq -->
+            <text x="90" y="200" text-anchor="middle" fill="#ef4444" font-size="28" font-weight="900" opacity="0.12">✕</text>
+            <text x="90" y="228" text-anchor="middle" fill="#ef4444" font-size="7.5" font-family="JetBrains Mono, monospace">Interesse consumido</text>
+
+            <!-- LIMPO: zona intacta dir -->
+            <rect x="215" y="108" width="155" height="24" fill="rgba(16,185,129,0.07)" stroke="#10b981" stroke-width="1" stroke-dasharray="3 2" rx="2"/>
+            <text x="292" y="123" text-anchor="middle" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">OB BEARISH</text>
+
+            <!-- Candle OB dir -->
+            <line x1="230" y1="98" x2="230" y2="138" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="223" y="108" width="12" height="24" fill="#ef4444" rx="1"/>
+            <!-- Impulso de baixa -->
+            <line x1="248" y1="72" x2="248" y2="112" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="241" y="74" width="12" height="36" fill="#ef4444" rx="1"/>
+            <line x1="266" y1="55" x2="266" y2="78" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="259" y="57" width="12" height="22" fill="#ef4444" rx="1"/>
+            <line x1="284" y1="44" x2="284" y2="60" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="277" y="46" width="12" height="16" fill="#ef4444" rx="1"/>
+            <line x1="302" y1="40" x2="302" y2="50" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="295" y="42" width="12" height="12" fill="#ef4444" rx="1"/>
+
+            <!-- Seta apontando para zona limpa -->
+            <path d="M355 60 Q365 90 360 110" fill="none" stroke="rgba(16,185,129,0.4)" stroke-width="1.5"/>
+            <text x="355" y="150" text-anchor="middle" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">INTACTA</text>
+            <text x="355" y="162" text-anchor="middle" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">aguarda</text>
+
+            <!-- Check verde dir -->
+            <text x="290" y="200" text-anchor="middle" fill="#10b981" font-size="28" font-weight="900" opacity="0.12">✓</text>
+            <text x="290" y="228" text-anchor="middle" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">Primeira visita</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKLIST CTZ INTERATIVO -->
+    <div class="checklist-card reveal">
+      <div class="cl-header">
+        <span class="cl-header-icon">📋</span>
+        <div>
+          <div class="cl-title">Checklist CTZ — Pré-Entrada</div>
+          <div class="cl-sub">Clique nos itens para confirmar · Todos os itens devem estar ✓ antes de entrar</div>
+        </div>
+      </div>
+
+      <!-- PILAR C -->
+      <div class="cl-group-label" style="color:var(--ctz-c)">【C】 CANDLE / CONTEXTO</div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">O candle de origem do OB tem corpo significativo (≥ 60% do range total)
+          <small>Body deve dominar sobre as sombras — indica intenção direcional institucional forte</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">O movimento posterior ao OB gerou BOS ou CHoCH confirmado no LTF
+          <small>Sem BOS/CHoCH, o "OB" é apenas ruído — sem intenção direcional confirmada</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">Existe FVG (imbalance) criado no movimento de saída pós-OB
+          <small>FVG confirma velocidade e urgência institucional no movimento de origem</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">Houve liquidity sweep imediatamente antes da criação do OB
+          <small>Stop hunt anterior = armadilha institucional confirmada → maior probabilidade</small>
+        </div>
+      </div>
+
+      <!-- PILAR T -->
+      <div class="cl-group-label" style="color:var(--ctz-t)">【T】 TEMPO / TIMEFRAME</div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">O OB está alinhado com a tendência do HTF (Daily ou 4H)
+          <small>OBs contra a tendência do HTF falham com muito mais frequência — evitar</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">O preço está em zona Premium (para shorts) ou Discount (para longs) no HTF
+          <small>Entrar shorts em Premium / longs em Discount → máxima confluência institucional</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">Estamos dentro de uma Kill Zone ativa (London 07–10h ou NY Open 12–15h UTC)
+          <small>Fora das Kill Zones a manipulação institucional é menos previsível → evitar</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">Não há evento de notícia de alto impacto nos próximos 30 minutos
+          <small>News de alto impacto invalidam análise técnica temporariamente</small>
+        </div>
+      </div>
+
+      <!-- PILAR Z -->
+      <div class="cl-group-label" style="color:var(--ctz-z)">【Z】 ZONA / QUALIDADE</div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">A zona do OB ainda não foi mitigada — esta é a primeira visita do preço
+          <small>Zonas já visitadas perdem validade progressivamente → descartar OBs sujos</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">A zona é compacta e bem definida (não é uma região ampla e imprecisa)
+          <small>Zonas precisas = SL menor e melhor relação risco/retorno → preferir</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">Existe FVG ou confluência de zona dentro/adjacente ao OB
+          <small>Confluência de zonas aumenta magnetismo e probabilidade de reação</small>
+        </div>
+      </div>
+
+      <!-- TRIGGER -->
+      <div class="cl-group-label" style="color:var(--purple2)">【✦】 TRIGGER DE ENTRADA (LTF)</div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">Formação de padrão reversivo ao tocar a zona (Engolfo, Pinbar, CHoCH no LTF)
+          <small>Nunca entrar às cegas na zona — aguardar reação confirmada do preço</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">SL definido e posicionado corretamente atrás do OB com buffer
+          <small>Bullish OB: SL abaixo do mínimo · Bearish OB: SL acima do máximo</small>
+        </div>
+      </div>
+      <div class="cl-item" onclick="chk(this)">
+        <div class="cl-box"></div>
+        <div class="cl-text">Relação Risco/Retorno ≥ 1:2 com alvo identificado (próxima liquidez)
+          <small>R:R abaixo de 1:2 inviabiliza estatisticamente o longo prazo</small>
+        </div>
+      </div>
+
+      <div class="cl-footer">
+        <div>
+          <div class="cl-prog-label" id="cl-label">0 / 15 itens confirmados</div>
+          <div class="cl-prog-track" style="margin-top:6px">
+            <div class="cl-prog-fill" id="cl-fill"></div>
+          </div>
+        </div>
+        <button class="btn-reset" onclick="resetCl()">↺ Resetar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     09 — FLUXO DE ENTRADA SMC
+══════════════════════════════════════════════ -->
+<section class="module" id="entrada">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">09 — Execution Flow</div>
+      <h2 class="sec-title">Fluxo de <span style="color:var(--pink)">Entrada</span></h2>
+      <p class="sec-desc">A sequência completa — do mapa macro ao gatilho de entrada — que o trader SMC profissional executa antes de cada operação.</p>
+    </div>
+
+    <div class="flow-steps reveal">
+      <div class="flow-step">
+        <div class="fs-num">01</div>
+        <span class="fs-icon">🗺️</span>
+        <div class="fs-title">Análise Macro (HTF)</div>
+        <div class="fs-desc">Abra Daily ou Weekly. Identifique a tendência macro, zonas Premium/Discount, OBs relevantes e marque os pools de liquidez (BSL/SSL). Defina o viés direcional da semana.</div>
+      </div>
+      <div class="flow-step">
+        <div class="fs-num">02</div>
+        <span class="fs-icon">🧭</span>
+        <div class="fs-title">Contexto Médio (4H)</div>
+        <div class="fs-desc">No 4H, confirme o viés do HTF, identifique OBs e FVGs relevantes, marque a estrutura atual (BOS/CHoCH) e determine a direção do dia seguinte.</div>
+      </div>
+      <div class="flow-step">
+        <div class="fs-num">03</div>
+        <span class="fs-icon">🔍</span>
+        <div class="fs-title">Zona de Entrada (1H)</div>
+        <div class="fs-desc">Refine o OB no 1H. Verifique: alinhamento com HTF, zona não mitigada, FVG adjacente, liquidity sweep anterior. Aplique o Pilar Z do CTZ.</div>
+      </div>
+      <div class="flow-step">
+        <div class="fs-num">04</div>
+        <span class="fs-icon">⏳</span>
+        <div class="fs-title">Aguardar Kill Zone</div>
+        <div class="fs-desc">Coloque alertas na zona e aguarde. Só opere dentro das Kill Zones (London 07–10h / NY Open 12–15h UTC). Fora delas, o setup é descartado independentemente de quão perfeito pareça.</div>
+      </div>
+      <div class="flow-step">
+        <div class="fs-num">05</div>
+        <span class="fs-icon">📍</span>
+        <div class="fs-title">Confirmar Trigger (15min)</div>
+        <div class="fs-desc">No 15min ou 5min, aguarde o trigger: CHoCH interno, MSS, engolfo ou pinbar ao tocar a zona. Nunca entre antecipando — o trigger é obrigatório. Este é o último filtro CTZ.</div>
+      </div>
+      <div class="flow-step">
+        <div class="fs-num">06</div>
+        <span class="fs-icon">💰</span>
+        <div class="fs-title">Executar e Gerenciar</div>
+        <div class="fs-desc">Entrada após trigger. SL: 2–5 pts atrás do OB. Saída parcial no primeiro FVG ou OB oposto. Saída total no próximo pool de liquidez. Mín R:R 1:2.</div>
+      </div>
+    </div>
+
+    <!-- DIAGRAMA FLUXO TRADE COMPLETO -->
+    <div class="chart-box reveal" style="margin-top:32px">
+      <div class="chart-bar">
+        <span class="cbar-dot" style="background:var(--bearish)"></span>
+        <span class="cbar-dot" style="background:var(--bullish)"></span>
+        <span class="cbar-dot" style="background:var(--gold)"></span>
+        <span class="cbar-title">TRADE COMPLETO — SHORT SETUP SMC (BEARISH)</span>
+        <span class="cbar-badge" style="background:rgba(236,72,153,0.1);color:var(--pink)">EXEMPLO</span>
+      </div>
+      <div class="chart-inner">
+        <svg viewBox="0 0 720 280" class="svg-resp">
+          <rect width="720" height="280" fill="#111c30"/>
+          <defs>
+            <pattern id="bg2" width="28" height="28" patternUnits="userSpaceOnUse">
+              <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="720" height="280" fill="url(#bg2)"/>
+
+          <!-- Tendência de alta inicial + BSL -->
+          <polyline points="20,240 55,215 80,225 115,195 142,208 178,175 204,186 238,155"
+            fill="none" stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>
+
+          <!-- BSL zona -->
+          <line x1="20" y1="150" x2="290" y2="150" stroke="rgba(16,185,129,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="35" y="145" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">BSL 🎯</text>
+
+          <!-- Sweep BSL (spike acima) + candle OB bearish -->
+          <line x1="248" y1="128" x2="248" y2="158" stroke="#10b981" stroke-width="1.8"/>
+          <rect x="241" y="130" width="14" height="22" fill="#10b981" rx="1"/>
+
+          <!-- Spike -->
+          <line x1="270" y1="118" x2="270" y2="152" stroke="#10b981" stroke-width="1.8"/>
+          <rect x="264" y="132" width="14" height="16" fill="#10b981" rx="1"/>
+          <text x="270" y="110" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BSL SWEEP</text>
+
+          <!-- OB BEARISH (último verde) -->
+          <rect x="286" y="135" width="360" height="22" fill="rgba(0,212,255,0.04)" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 2" rx="2"/>
+          <line x1="290" y1="128" x2="290" y2="162" stroke="#ef4444" stroke-width="1.8"/>
+          <rect x="284" y="135" width="14" height="22" fill="#10b981" rx="2"/>
+          <text x="293" y="124" text-anchor="middle" fill="#00d4ff" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">OB BEARISH</text>
+
+          <!-- FVG zona -->
+          <rect x="310" y="100" width="70" height="26" fill="rgba(168,85,247,0.08)" stroke="rgba(168,85,247,0.35)" stroke-width="0.8" stroke-dasharray="2 2" rx="2"/>
+          <text x="345" y="116" text-anchor="middle" fill="#a855f7" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">FVG</text>
+
+          <!-- Impulso bearish (BOS) -->
+          <line x1="310" y1="96" x2="310" y2="138" stroke="#ef4444" stroke-width="2"/>
+          <rect x="304" y="98" width="14" height="38" fill="#ef4444" rx="1"/>
+          <line x1="334" y1="74" x2="334" y2="102" stroke="#ef4444" stroke-width="2"/>
+          <rect x="328" y="76" width="14" height="26" fill="#ef4444" rx="1"/>
+          <line x1="358" y1="58" x2="358" y2="80" stroke="#ef4444" stroke-width="2"/>
+          <rect x="352" y="60" width="14" height="20" fill="#ef4444" rx="1"/>
+
+          <!-- BOS -->
+          <line x1="282" y1="248" x2="372" y2="248" stroke="rgba(16,185,129,0.4)" stroke-width="1.2" stroke-dasharray="4 2"/>
+          <text x="326" y="260" text-anchor="middle" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">BOS ↓</text>
+
+          <!-- Kill Zone band -->
+          <rect x="385" y="8" width="5" height="264" fill="rgba(245,200,66,0.12)"/>
+          <text x="395" y="20" fill="#f5c842" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">KILL ZONE</text>
+          <text x="395" y="30" fill="#f5c842" font-size="7" font-family="JetBrains Mono, monospace">NY OPEN</text>
+
+          <!-- Retorno ao OB -->
+          <path d="M365 60 Q390 52 420 90 Q445 120 455 136"
+            fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1.8" stroke-dasharray="6 3"/>
+          <text x="412" y="80" fill="#00d4ff" font-size="8" font-family="JetBrains Mono, monospace">retorno ao OB</text>
+
+          <!-- CHoCH / TRIGGER no LTF -->
+          <text x="462" y="118" text-anchor="middle" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">TRIGGER</text>
+          <text x="462" y="128" text-anchor="middle" fill="#10b981" font-size="7" font-family="JetBrains Mono, monospace">CHoCH LTF</text>
+
+          <!-- Candle trigger -->
+          <line x1="462" y1="132" x2="462" y2="162" stroke="#ef4444" stroke-width="2"/>
+          <rect x="456" y="135" width="12" height="22" fill="#ef4444" rx="2"/>
+
+          <!-- SL acima do OB -->
+          <line x1="450" y1="165" x2="720" y2="165" stroke="rgba(239,68,68,0.3)" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="480" y="178" fill="#ef4444" font-size="7.5" font-family="JetBrains Mono, monospace">SL — acima do OB (atrás)</text>
+
+          <!-- Entrada e queda -->
+          <line x1="482" y1="110" x2="482" y2="140" stroke="#ef4444" stroke-width="2"/>
+          <rect x="476" y="112" width="12" height="26" fill="#ef4444" rx="1"/>
+          <line x1="502" y1="86" x2="502" y2="116" stroke="#ef4444" stroke-width="2"/>
+          <rect x="496" y="88" width="12" height="26" fill="#ef4444" rx="1"/>
+          <line x1="522" y1="65" x2="522" y2="92" stroke="#ef4444" stroke-width="2"/>
+          <rect x="516" y="67" width="12" height="24" fill="#ef4444" rx="1"/>
+          <line x1="542" y1="48" x2="542" y2="70" stroke="#ef4444" stroke-width="2"/>
+          <rect x="536" y="50" width="12" height="20" fill="#ef4444" rx="1"/>
+          <line x1="562" y1="35" x2="562" y2="54" stroke="#ef4444" stroke-width="2"/>
+          <rect x="556" y="37" width="12" height="18" fill="#ef4444" rx="1"/>
+
+          <!-- Saída parcial -->
+          <line x1="480" y1="210" x2="700" y2="210" stroke="rgba(16,185,129,0.3)" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="560" y="205" fill="#10b981" font-size="7.5" font-family="JetBrains Mono, monospace">TP1 — FVG / SSL parcial</text>
+
+          <!-- Alvo final SSL -->
+          <line x1="480" y1="248" x2="700" y2="248" stroke="rgba(16,185,129,0.5)" stroke-width="1.5" stroke-dasharray="5 3"/>
+          <text x="560" y="243" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">TARGET — SSL pool 🎯</text>
+
+          <!-- Seta de R:R -->
+          <line x1="660" y1="157" x2="660" y2="248" stroke="rgba(16,185,129,0.5)" stroke-width="1.5"/>
+          <text x="672" y="210" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">R:R</text>
+          <text x="672" y="220" fill="#10b981" font-size="8" font-weight="700" font-family="JetBrains Mono, monospace">1:3</text>
+          <line x1="657" y1="157" x2="663" y2="157" stroke="rgba(239,68,68,0.5)" stroke-width="1"/>
+          <line x1="657" y1="248" x2="663" y2="248" stroke="rgba(16,185,129,0.5)" stroke-width="1"/>
+
+          <!-- CTZ labels -->
+          <text x="710" y="40" text-anchor="end" fill="#00d4ff" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">C ✓</text>
+          <text x="710" y="52" text-anchor="end" fill="#f5c842" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">T ✓</text>
+          <text x="710" y="64" text-anchor="end" fill="#10b981" font-size="7.5" font-weight="700" font-family="JetBrains Mono, monospace">Z ✓</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     10 — GESTÃO DE RISCO
+══════════════════════════════════════════════ -->
+<section class="module module-alt" id="risco">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">10 — Risk Management</div>
+      <h2 class="sec-title">Gestão de <span style="color:var(--bearish2)">Risco</span></h2>
+      <p class="sec-desc">A melhor metodologia do mundo fracassa sem gestão de risco sólida. No SMC, o dimensionamento correto de posição e a colocação precisa do SL são tão importantes quanto identificar o setup.</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🛡️</span>
+        <div class="card-title">Stop Loss — Posicionamento</div>
+        <div class="card-desc"><strong>OB Bullish:</strong> SL 2–5 pontos abaixo do mínimo do candle OB.<br><strong>OB Bearish:</strong> SL 2–5 pontos acima do máximo do candle OB.<br>Nunca coloque o SL no corpo — sempre além do extremo, com buffer para spreads e slippage.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bullish)">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">Take Profit — Alvos</div>
+        <div class="card-desc"><strong>TP1 (parcial):</strong> Próximo FVG não preenchido ou OB oposto. <strong>TP2 (parcial):</strong> EQ do range maior. <strong>TP3 (total):</strong> Pool de liquidez (BSL/SSL) no HTF. Realize parciais para garantir resultado e deixar o restante correr.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--gold)">
+        <span class="card-icon">⚖️</span>
+        <div class="card-title">R:R Mínimo</div>
+        <div class="card-desc">Nunca opere setups SMC com R:R abaixo de 1:2. O ideal é 1:3 ou superior. Com taxa de acerto de 50%, R:R 1:2 gera lucro líquido consistente. R:R abaixo de 1:1 é matematicamente insustentável.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--blue)">
+        <span class="card-icon">📐</span>
+        <div class="card-title">Dimensionamento de Posição</div>
+        <div class="card-desc">Arrisque no máximo 1–2% do capital por operação. Calcule: Contratos = (Capital × 0.01) ÷ (SL em pontos × valor do ponto). Nunca aumente o risco por "convicção" — o método protege o capital antes do lucro.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--purple)">
+        <span class="card-icon">📊</span>
+        <div class="card-title">Break Even</div>
+        <div class="card-desc">Quando o preço atingir TP1 (saída parcial), mova o SL para o preço de entrada (break even). Isso elimina o risco da operação restante. No SMC, a parcial é geralmente 50% da posição no primeiro FVG ou OB oposto.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--orange)">
+        <span class="card-icon">📅</span>
+        <div class="card-title">Máximo Diário de Perdas</div>
+        <div class="card-desc">Defina um drawdown máximo diário (ex: 3% do capital). Se atingir, pare no dia. Nunca "venge trade" após perdas. A consistência no SMC vem de múltiplas operações ao longo do tempo, não de uma operação grande.</div>
+      </div>
+    </div>
+
+    <!-- Tabela comparativa Setup Válido vs Inválido -->
+    <div class="chart-box reveal" style="margin-top:32px;overflow:auto">
+      <div class="chart-bar">
+        <span class="cbar-dot" style="background:var(--bullish)"></span>
+        <span class="cbar-dot" style="background:var(--bearish)"></span>
+        <span class="cbar-title">SETUP VÁLIDO vs INVÁLIDO — COMPARATIVO COMPLETO</span>
+      </div>
+      <div style="padding:0;overflow-x:auto">
+        <table class="comp-table" style="min-width:560px">
+          <thead>
+            <tr>
+              <th>Critério</th>
+              <th style="color:var(--bullish)">✓ Setup Válido (Operar)</th>
+              <th style="color:var(--bearish)">✕ Setup Inválido (Descartar)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="y">Pilar C — Candle OB</td>
+              <td class="g">Corpo forte ≥ 60%, marubozu ou similar</td>
+              <td class="r">Doji, pin bar, wick dominante</td>
+            </tr>
+            <tr>
+              <td class="y">Pilar T — HTF</td>
+              <td class="g">Alinhado com tendência Daily/4H</td>
+              <td class="r">Contra a tendência do HTF</td>
+            </tr>
+            <tr>
+              <td class="y">Pilar T — Zona HTF</td>
+              <td class="g">Short em Premium / Long em Discount</td>
+              <td class="r">Short em Discount / Long em Premium</td>
+            </tr>
+            <tr>
+              <td class="y">Pilar T — Kill Zone</td>
+              <td class="g">London Open ou NY Open ativas</td>
+              <td class="r">Fora das Kill Zones</td>
+            </tr>
+            <tr>
+              <td class="y">Pilar Z — Mitigação</td>
+              <td class="g">Primeira visita — zona intacta</td>
+              <td class="r">Zona já visitada / parcialmente mitigada</td>
+            </tr>
+            <tr>
+              <td class="y">Pilar Z — FVG</td>
+              <td class="g">FVG presente dentro ou adjacente ao OB</td>
+              <td class="r">Sem FVG — OB isolado</td>
+            </tr>
+            <tr>
+              <td class="y">Trigger LTF</td>
+              <td class="g">CHoCH, MSS, engolfo ou pinbar confirmado</td>
+              <td class="r">Entrada antecipada — sem trigger</td>
+            </tr>
+            <tr>
+              <td class="y">R:R</td>
+              <td class="g">≥ 1:2 (ideal 1:3 ou mais)</td>
+              <td class="r">Abaixo de 1:2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     11 — ERROS COMUNS
+══════════════════════════════════════════════ -->
+<section class="module" id="erros">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">11 — Erros & Armadilhas</div>
+      <h2 class="sec-title">Erros <span style="color:var(--bearish2)">Comuns</span></h2>
+      <p class="sec-desc">Os erros mais frequentes que traders cometem ao aprender SMC — e como evitá-los antes que custem capital real.</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">Operar OB sem BOS/CHoCH</div>
+        <div class="card-desc">Marcar qualquer candle de cor oposta como OB sem verificar se há BOS/CHoCH no movimento seguinte. Sem confirmação estrutural, a zona pode não ter sido criada pelo Smart Money.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">Entrar sem Trigger no LTF</div>
+        <div class="card-desc">Ver o preço chegar no OB e entrar imediatamente "às cegas". O trigger (CHoCH, engolfo, MSS) no LTF é o filtro que confirma que o preço realmente reagiu à zona — e não vai furar.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">Ignorar o HTF</div>
+        <div class="card-desc">Focar apenas no LTF e operar OBs bearish em plena tendência de alta do Daily. A força do tempo maior sempre prevalece sobre o menor — operar contra ela é contra o Smart Money.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">OBs Mitigados / "Sujos"</div>
+        <div class="card-desc">Retornar a OBs que já foram visitados múltiplas vezes. Cada toque mitiga progressivamente o interesse institucional. Primeiro retorno: máximo poder. Segundo e além: descartar.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">Operar Fora de Kill Zones</div>
+        <div class="card-desc">Tentar operar setups SMC às 14h, 16h ou outros horários de baixo volume institucional. A precisão dos setups cai drasticamente fora das janelas de atividade do Smart Money.</div>
+      </div>
+      <div class="concept-card" style="--c-accent:var(--bearish)">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">Marcar OBs em Excesso</div>
+        <div class="card-desc">Pintar o gráfico com dezenas de OBs. Nem todo candle oposto é um OB válido. Menos é mais — apenas OBs com sweep anterior, FVG de saída e BOS/CHoCH qualificam como OBs reais.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     12 — GLOSSÁRIO
+══════════════════════════════════════════════ -->
+<section class="module module-alt" id="glossario">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div class="sec-tag">12 — Referência</div>
+      <h2 class="sec-title">Glossário <span style="color:var(--gold)">SMC</span></h2>
+      <p class="sec-desc">Todos os termos essenciais do Smart Money Concepts organizados para consulta rápida.</p>
+    </div>
+
+    <div class="gloss-grid reveal">
+      <div class="gloss-item"><div class="gloss-term">Smart Money</div><div class="gloss-def">Participantes institucionais: bancos, hedge funds, market makers e bancos centrais. Movem o mercado com ordens massivas e deixam padrões identificáveis no price action.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Order Block (OB)</div><div class="gloss-def">Último candle de direção oposta antes de um movimento impulsivo. Representa onde o Smart Money posicionou ordens massivas. Zona de suporte/resistência institucional.</div></div>
+      <div class="gloss-item"><div class="gloss-term">FVG · Fair Value Gap</div><div class="gloss-def">Imbalance entre 3 candles consecutivos — mín(C3) > máx(C1) ou máx(C3) < mín(C1). O mercado tende a retornar e preencher a lacuna antes de continuar o movimento.</div></div>
+      <div class="gloss-item"><div class="gloss-term">BOS · Break of Structure</div><div class="gloss-def">Quando o preço rompe o último swing high/low na direção da tendência. Confirma continuação — o Smart Money está movendo na direção da estrutura predominante.</div></div>
+      <div class="gloss-item"><div class="gloss-term">CHoCH · Change of Character</div><div class="gloss-def">Primeira quebra de estrutura contra a tendência. Sinaliza possível reversão. Menos confirmado que BOS — use como alerta, não como entrada isolada.</div></div>
+      <div class="gloss-item"><div class="gloss-term">MSS · Market Structure Shift</div><div class="gloss-def">CHoCH com impulso forte + FVG. Confirma reversão com alta probabilidade no LTF. Mais agressivo e confiável que o CHoCH isolado para entradas de reversão.</div></div>
+      <div class="gloss-item"><div class="gloss-term">BSL · Buy Side Liquidity</div><div class="gloss-def">Liquidez acima de topos — onde buy stops e stops de shorts estão acumulados. O SM varre o BSL para executar grandes ordens de venda antes de cair.</div></div>
+      <div class="gloss-item"><div class="gloss-term">SSL · Sell Side Liquidity</div><div class="gloss-def">Liquidez abaixo de fundos — onde sell stops e stops de longs estão acumulados. O SM varre o SSL para executar grandes ordens de compra antes de subir.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Liquidity Sweep</div><div class="gloss-def">Movimento rápido que aciona stops além de um nível e reverte. O "stop hunt" clássico. Confirma que o SM coletou liquidez e está pronto para mover em outra direção.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Premium Zone</div><div class="gloss-def">Região acima do Equilibrium (50% do swing) no HTF. Ideal para posições vendidas. O preço está "caro" — o SM vende em premium e compra em discount.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Discount Zone</div><div class="gloss-def">Região abaixo do Equilibrium (50% do swing) no HTF. Ideal para posições compradas. O preço está "barato" — o SM compra em discount e distribui em premium.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Equilibrium (EQ)</div><div class="gloss-def">O nível de 50% do último swing no HTF. Divide o range em Premium (acima) e Discount (abaixo). Corresponde ao Fibonacci 0.5 do movimento.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Kill Zone</div><div class="gloss-def">Janela horária de máxima atividade institucional: Asia (00–04h), London (07–10h), NY Open (12–15h) e NY PM (19–20h) UTC. Setups dentro de KZ têm maior precisão.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Mitigação</div><div class="gloss-def">Quando o preço retorna ao range de um OB e "consome" as ordens remanescentes. Um OB mitigado perde validade. Primeiro retorno = mais forte. Terceiro retorno = descartado.</div></div>
+      <div class="gloss-item"><div class="gloss-term">IFVG · Inverse FVG</div><div class="gloss-def">FVG já preenchido que agora funciona como suporte/resistência. O nível médio do FVG original se torna zona de reação após o preenchimento.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Breaker Block</div><div class="gloss-def">OB que foi completamente mitigado e depois inverteu de polaridade. Um antigo OB bullish mitigado se torna resistência (Breaker Block bearish) e vice-versa.</div></div>
+      <div class="gloss-item"><div class="gloss-term">CTZ</div><div class="gloss-def">Sistema de três filtros para confirmação de OBs: C (Candle/Contexto), T (Time/Tempo) e Z (Zone/Zona). Todos os três devem ser confirmados simultaneamente para uma entrada válida.</div></div>
+      <div class="gloss-item"><div class="gloss-term">PDH / PDL / PWH / PWL</div><div class="gloss-def">Previous Day High/Low e Previous Week High/Low. Níveis de liquidez de alto valor frequentemente usados pelo SM como alvos de sweep antes de movimentos maiores.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <a href="index.html" class="footer-cta">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    ← Voltar à Página Inicial
+  </a>
+
+  <p>📊 <strong>Smart Money Concepts</strong> — Guia Completo · Souza Produções</p>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/souza.producoes.2012" target="_blank" rel="noopener">📸 Instagram</a>
+    <a href="https://www.facebook.com/Souza.Producoes.2012" target="_blank" rel="noopener">👍 Facebook</a>
+    <a href="https://www.youtube.com/@vfshomevideo" target="_blank" rel="noopener">▶️ YouTube</a>
+    <a href="index.html">🏠 Price Action Academy</a>
+  </div>
+  <p class="footer-disc">Este material tem caráter exclusivamente educativo e informativo. Não constitui recomendação de compra ou venda de ativos financeiros. O trading envolve riscos substanciais. Consulte um profissional credenciado pela CVM. © 2026 Souza Produções.</p>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
+<script>
+// PROGRESS BAR
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+});
+
+// ACTIVE NAV
+const navLinks = document.querySelectorAll('.tnav-link');
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+  });
+}, {passive:true});
+
+// REVEAL ON SCROLL
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.08});
+reveals.forEach(el => io.observe(el));
+
+// CHECKLIST
+const CL_TOTAL = 15;
+
+function chk(item) {
+  item.classList.toggle('done');
+  updateCl();
+}
+
+function updateCl() {
+  const done = document.querySelectorAll('.cl-item.done').length;
+  const pct  = (done / CL_TOTAL) * 100;
+  document.getElementById('cl-fill').style.width  = pct + '%';
+  document.getElementById('cl-label').textContent = `${done} / ${CL_TOTAL} itens confirmados`;
+}
+
+function resetCl() {
+  document.querySelectorAll('.cl-item').forEach(i => i.classList.remove('done'));
+  updateCl();
+}
+</script>
+<!-- ─── QUIZ MODAL ─── -->
+<div id="quizModal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px;" onclick="closeModuleQuiz(event)">
+    <div style="background:#111c30;border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:40px;max-width:580px;width:100%;position:relative;max-height:90vh;overflow-y:auto;" onclick="event.stopPropagation()">
+        <button onclick="closeModuleQuiz()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#94a3b8;cursor:pointer;font-size:1.3rem;">✕</button>
+        <div id="quizContent"></div>
+    </div>
+</div>
+<script src="quiz-engine.js"></script>
+
+</body>
+</html>

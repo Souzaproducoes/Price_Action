@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://souzaproducoes.github.io/Price_Action/sitemap.xml

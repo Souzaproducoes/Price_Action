@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ── Google Analytics GA4 ── -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N0GH75LRX6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N0GH75LRX6');
+    </script>
+    <title>Price Action Academy | Souza Produções — Candlesticks, WINFUT, ICT & Smart Money</title>
+    <meta name="description" content="Aprenda Price Action gratuitamente: Padrão dos 3 Candles, Smart Money Concepts, Alinhamento de Fluxo, ICT, WINFUT e 43 padrões de Candlestick em português. Educação financeira gratuita para traders brasileiros.">
+    <meta name="keywords" content="price action, candlestick, padrões candlestick, WINFUT, WIN futuro, ICT trading, order blocks, FVG, fair value gap, smart money concepts, SMC, análise técnica, trading brasil, alinhamento de fluxo, padrão 3 candles, liquidity sweep, negação de liquidez, souza produções">
+    <meta name="author" content="Souza Produções">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0a0d14">
+    <link rel="canonical" href="https://souzaproducoes.github.io/Price_Action/">
+
+    <!-- ── Open Graph ── -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://souzaproducoes.github.io/Price_Action/">
+    <meta property="og:title"       content="Price Action Academy | Souza Produções">
+    <meta property="og:description" content="Padrão dos 3 Candles, Smart Money, ICT, WINFUT e 43 Candlesticks em português. Educação financeira gratuita para traders.">
+    <meta property="og:image"       content="https://souzaproducoes.github.io/Price_Action/logo-souza.png">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale"      content="pt_BR">
+    <meta property="og:site_name"   content="Souza Produções">
+
+    <!-- ── Twitter Card ── -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="Price Action Academy | Souza Produções">
+    <meta name="twitter:description" content="Padrão dos 3 Candles, Smart Money, ICT, WINFUT e 43 Candlesticks em português. Educação financeira gratuita.">
+    <meta name="twitter:image"       content="https://souzaproducoes.github.io/Price_Action/logo-souza.png">
+
+    <!-- ── Favicon ── -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <!-- ── Schema.org — EducationalOrganization + Course list ── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Souza Produções",
+          "description": "Educação financeira sobre Price Action, Candlesticks, WINFUT, ICT e Smart Money Concepts em português",
+          "url": "https://souzaproducoes.github.io/Price_Action/",
+          "logo": "https://souzaproducoes.github.io/Price_Action/logo-souza.png",
+          "sameAs": [
+            "https://www.instagram.com/souza.producoes.2012",
+            "https://www.facebook.com/Souza.Producoes.2012",
+            "https://www.youtube.com/@vfshomevideo"
+          ]
+        },
+        {
+          "@type": "Course",
+          "name": "Price Action Academy",
+          "description": "Curso completo de Price Action: Padrão dos 3 Candles, Smart Money, Alinhamento de Fluxo, ICT, WINFUT e Candlesticks",
+          "provider": { "@type": "Organization", "name": "Souza Produções" },
+          "url": "https://souzaproducoes.github.io/Price_Action/",
+          "inLanguage": "pt-BR",
+          "isAccessibleForFree": true,
+          "hasCourseInstance": [
+            { "@type": "CourseInstance", "name": "Padrão dos 3 Candles — Negação de Liquidez", "url": "https://souzaproducoes.github.io/Price_Action/tres-candles.html" },
+            { "@type": "CourseInstance", "name": "Smart Money Concepts (SMC)", "url": "https://souzaproducoes.github.io/Price_Action/smart-money-concepts.html" },
+            { "@type": "CourseInstance", "name": "Alinhamento de Fluxo", "url": "https://souzaproducoes.github.io/Price_Action/alinhamento-de-fluxo.html" },
+            { "@type": "CourseInstance", "name": "ICT Metodologia Avançada", "url": "https://souzaproducoes.github.io/Price_Action/ICT_Estudo_Avancado.html" },
+            { "@type": "CourseInstance", "name": "WINFUT — Padrões do Mini-Índice", "url": "https://souzaproducoes.github.io/Price_Action/winfut.html" },
+            { "@type": "CourseInstance", "name": "Candlesticks — 43 Padrões de Price Action", "url": "https://souzaproducoes.github.io/Price_Action/candlesticks.html" }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- ── Fonts ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ══════════════════════════════════════════
+           IFRAME MODULE WRAPPER
+           ══════════════════════════════════════════ */
+        .module-frame-wrap {
+            position: relative;
+            width: 100%;
+            min-height: calc(100vh - 58px);
+        }
+        .module-iframe {
+            width: 100%;
+            border: none;
+            display: block;
+            min-height: calc(100vh - 58px);
+            height: calc(100vh - 58px);
+        }
+        /* Remove padding from tab panels (iframes go edge-to-edge) */
+        #tab-tres-candles,
+        #tab-smc,
+        #tab-alinhamento,
+        #tab-ict-avancado,
+        #tab-winfut,
+        #tab-candlesticks {
+            padding: 0;
+        }
+
+        /* ══════════════════════════════════════════
+           TOPBAR — single row, all 6 tabs + socials
+           ══════════════════════════════════════════ */
+        .topbar {
+            flex-wrap: nowrap !important;
+            height: 58px !important;
+            padding: 0 16px !important;
+            gap: 10px !important;
+        }
+        .topbar-brand {
+            flex-shrink: 0;
+            gap: 8px !important;
+        }
+        .topbar-tagline { display: none !important; }
+        .topbar-logo    { width: 30px !important; height: 30px !important; }
+        .topbar-name    { font-size: 0.83rem !important; }
+
+        /* Tab nav scrollable */
+        .tab-nav {
+            flex: 1 !important;
+            justify-content: flex-start !important;
+            gap: 2px !important;
+            overflow-x: auto !important;
+            padding: 0 !important;
+            scrollbar-width: none;
+        }
+        .tab-nav::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            font-size: 0.76rem !important;
+            padding: 5px 11px !important;
+            gap: 5px !important;
+            white-space: nowrap !important;
+        }
+        .tab-dot   { width: 6px !important; height: 6px !important; }
+        .tab-badge { font-size: 0.58rem !important; padding: 1px 5px !important; }
+
+        /* NEW badge for latest module */
+        .tab-new {
+            display: inline-block;
+            font-size: 0.55rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 1px 5px;
+            border-radius: 2px;
+            background: rgba(240, 180, 41, 0.18);
+            color: #f5c518;
+            border: 1px solid rgba(240, 180, 41, 0.4);
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
+
+        .social-bar  { flex-shrink: 0; gap: 4px !important; }
+        .social-btn  { width: 28px !important; height: 28px !important; }
+
+        /* Active tab highlight */
+        .tab-btn.active {
+            background: rgba(255,255,255,0.06) !important;
+        }
+
+        @media (max-width: 480px) {
+            .module-iframe { height: 80vh; }
+            .topbar-name   { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ══════════════════════════════════════════════
+     ANNOUNCEMENT BANNER
+     ══════════════════════════════════════════════ -->
+<div class="ann-banner" id="annBanner">
+    🆕 <span>NOVO:</span> Padrão dos 3 Candles — Negação de Liquidez já disponível! &nbsp;·&nbsp;
+    🎓 6 módulos independentes: 3 Candles, SMC, Fluxo, ICT, WINFUT e Candlesticks &nbsp;·&nbsp;
+    📱 Siga nas redes!
+    <button class="ann-close" onclick="document.getElementById('annBanner').style.display='none'" aria-label="Fechar">✕</button>
+</div>
+
+<div id="app">
+
+    <!-- ══════════════════════════════════════════
+         TOP NAV
+         ══════════════════════════════════════════ -->
+    <nav class="topbar" role="navigation" aria-label="Módulos do curso">
+        <a class="topbar-brand" href="#" aria-label="Souza Produções — Price Action Academy">
+            <img src="logo-souza.png" alt="Souza Produções" class="topbar-logo">
+            <div>
+                <div class="topbar-name">Souza Produções</div>
+                <div class="topbar-tagline">Educação Financeira & Tecnologia</div>
+            </div>
+        </a>
+
+        <div class="tab-nav" role="tablist" aria-label="Módulos">
+
+            <!-- 1 ── PADRÃO DOS 3 CANDLES (mais novo) -->
+            <button class="tab-btn active" role="tab" aria-selected="true"
+                    aria-controls="tab-tres-candles" data-tab="tres-candles"
+                    onclick="switchTab('tres-candles', this)">
+                <span class="tab-dot" style="--tab-color:#f5c518"></span>
+                <span>3 Candles</span>
+                <span class="tab-new">novo</span>
+            </button>
+
+            <!-- 2 ── SMART MONEY CONCEPTS -->
+            <button class="tab-btn" role="tab" aria-selected="false"
+                    aria-controls="tab-smc" data-tab="smc"
+                    onclick="switchTab('smc', this)">
+                <span class="tab-dot" style="--tab-color:#3b82f6"></span>
+                <span>Smart Money</span>
+                <span class="tab-badge" style="background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.35);">SMC</span>
+            </button>
+
+            <!-- 3 ── ALINHAMENTO DE FLUXO -->
+            <button class="tab-btn" role="tab" aria-selected="false"
+                    aria-controls="tab-alinhamento" data-tab="alinhamento"
+                    onclick="switchTab('alinhamento', this)">
+                <span class="tab-dot" style="--tab-color:#f97316"></span>
+                <span>Alinhamento de Fluxo</span>
+            </button>
+
+            <!-- 4 ── ICT METODOLOGIA -->
+            <button class="tab-btn" role="tab" aria-selected="false"
+                    aria-controls="tab-ict-avancado" data-tab="ict-avancado"
+                    onclick="switchTab('ict-avancado', this)">
+                <span class="tab-dot" style="--tab-color:#a855f7"></span>
+                <span>ICT Metodologia</span>
+                <span class="tab-badge" style="background:rgba(168,85,247,0.15);color:#c084fc;border:1px solid rgba(168,85,247,0.35);">ICT</span>
+            </button>
+
+            <!-- 5 ── WINFUT -->
+            <button class="tab-btn" role="tab" aria-selected="false"
+                    aria-controls="tab-winfut" data-tab="winfut"
+                    onclick="switchTab('winfut', this)">
+                <span class="tab-dot" style="--tab-color:#0ea5e9"></span>
+                <span>WINFUT</span>
+            </button>
+
+            <!-- 6 ── CANDLESTICKS (mais antigo) -->
+            <button class="tab-btn" role="tab" aria-selected="false"
+                    aria-controls="tab-candlesticks" data-tab="candlesticks"
+                    onclick="switchTab('candlesticks', this)">
+                <span class="tab-dot" style="--tab-color:#10b981"></span>
+                <span>Candlesticks</span>
+            </button>
+
+        </div><!-- /.tab-nav -->
+
+        <!-- Social icons -->
+        <div class="social-bar" aria-label="Redes Sociais">
+            <a class="social-btn ig" href="https://www.instagram.com/souza.producoes.2012"
+               target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a class="social-btn fb" href="https://www.facebook.com/Souza.Producoes.2012"
+               target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a class="social-btn yt" href="https://www.youtube.com/@vfshomevideo"
+               target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+         TAB PANELS
+         ══════════════════════════════════════════ -->
+
+    <!-- 1 ── PADRÃO DOS 3 CANDLES -->
+    <div id="tab-tres-candles" class="tab-content active" role="tabpanel" aria-labelledby="tab-tres-candles">
+        <div class="module-frame-wrap">
+            <iframe id="iframe-tres-candles" class="module-iframe"
+                src="tres-candles.html"
+                title="Padrão dos 3 Candles — Negação de Liquidez | Smart Money"
+                loading="eager">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- 2 ── SMART MONEY CONCEPTS -->
+    <div id="tab-smc" class="tab-content" role="tabpanel" aria-labelledby="tab-smc">
+        <div class="module-frame-wrap">
+            <iframe id="iframe-smc" class="module-iframe"
+                src="smart-money-concepts.html"
+                title="Smart Money Concepts — Guia Completo SMC"
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- 3 ── ALINHAMENTO DE FLUXO -->
+    <div id="tab-alinhamento" class="tab-content" role="tabpanel" aria-labelledby="tab-alinhamento">
+        <div class="module-frame-wrap">
+            <iframe id="iframe-alinhamento" class="module-iframe"
+                src="alinhamento-de-fluxo.html"
+                title="Alinhamento de Fluxo de Mercado"
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- 4 ── ICT METODOLOGIA AVANÇADA -->
+    <div id="tab-ict-avancado" class="tab-content" role="tabpanel" aria-labelledby="tab-ict-avancado">
+        <div class="module-frame-wrap">
+            <iframe id="iframe-ict-avancado" class="module-iframe"
+                src="ICT_Estudo_Avancado.html"
+                title="ICT Metodologia Avançada — FVG, Order Blocks, Kill Zones"
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- 5 ── WINFUT -->
+    <div id="tab-winfut" class="tab-content" role="tabpanel" aria-labelledby="tab-winfut">
+        <div class="module-frame-wrap">
+            <iframe id="iframe-winfut" class="module-iframe"
+                src="winfut.html"
+                title="WINFUT — Padrões do Mini-Índice Bovespa"
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- 6 ── CANDLESTICKS -->
+    <div id="tab-candlesticks" class="tab-content" role="tabpanel" aria-labelledby="tab-candlesticks">
+        <div class="module-frame-wrap">
+            <iframe id="iframe-candlesticks" class="module-iframe"
+                src="candlesticks.html"
+                title="Candlesticks — 43 Padrões de Price Action"
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+</div><!-- /#app -->
+
+<!-- ══════════════════════════════════════════
+     FLOATING SOCIAL BUTTONS
+     ══════════════════════════════════════════ -->
+<div class="social-float" aria-label="Redes Sociais">
+    <a class="sf-btn ig" href="https://www.instagram.com/souza.producoes.2012"
+       target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span class="sf-tooltip">Instagram</span>
+    </a>
+    <a class="sf-btn fb" href="https://www.facebook.com/Souza.Producoes.2012"
+       target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <span class="sf-tooltip">Facebook</span>
+    </a>
+    <a class="sf-btn yt" href="https://www.youtube.com/@vfshomevideo"
+       target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span class="sf-tooltip">YouTube</span>
+    </a>
+</div>
+
+<!-- ── BACK TO TOP ── -->
+<button class="back-top" id="backTop"
+        onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════════ -->
+<script src="app-v5.js" defer></script>
+<script src="chatbot-ia.js" defer></script>
+
+<script>
+/* ── Override: primeiro iframe ativo agora é tres-candles ── */
+window.addEventListener('DOMContentLoaded', () => {
+    const firstIframe = document.getElementById('iframe-tres-candles');
+    if (!firstIframe) return;
+    const adjust = () => {
+        try {
+            const body = firstIframe.contentDocument.body;
+            const html = firstIframe.contentDocument.documentElement;
+            const h = Math.max(
+                body.scrollHeight, body.offsetHeight,
+                html.scrollHeight, html.offsetHeight
+            );
+            firstIframe.style.height = Math.max(h, window.innerHeight - 58) + 'px';
+        } catch(e) {
+            firstIframe.style.height = Math.max(window.innerHeight * 2, 1400) + 'px';
+        }
+    };
+    if (firstIframe.contentDocument?.readyState === 'complete') adjust();
+    else firstIframe.addEventListener('load', adjust, { once: true });
+});
+</script>
+
+</body>
+</html>
