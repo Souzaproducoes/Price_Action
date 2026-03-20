@@ -17,7 +17,7 @@
 const VERCEL_API_URL = 'https://price-action-azure.vercel.app/api/chat';
 
 // ── SYSTEM PROMPT ──
-const SYSTEM_PROMPT = `Você é a Isia, AI Agent educacional da Souza Produções.
+const SYSTEM_PROMPT = `Você é a Isis, AI Agent educacional da Souza Produções.
 
 IDENTIDADE:
 - Nome: Isis (Inteligência Souza IA)
@@ -194,7 +194,7 @@ let isTyping = false;
     const wrap = document.createElement('div');
     wrap.id = 'pa-chatbot-wrap';
     wrap.innerHTML = `
-    <button id="pa-chat-btn" onclick="paChatToggle()" title="Falar com Isia — AI Agent Souza Produções">
+    <button id="pa-chat-btn" onclick="paChatToggle()" title="Falar com Isis — AI Agent Souza Produções">
         <span id="pa-chat-btn-icon">📊</span>
         <span class="chat-badge">IA</span>
     </button>
@@ -202,7 +202,7 @@ let isTyping = false;
         <div id="pa-chat-header">
             <div class="chat-avatar">📊</div>
             <div class="chat-header-info">
-                <div class="chat-header-name">Isia — AI Agent · Souza Produções</div>
+                <div class="chat-header-name">Isis — AI Agent · Souza Produções</div>
                 <div class="chat-header-status">Online · Agente Educacional IA</div>
             </div>
             <button id="pa-chat-close" onclick="paChatToggle()" title="Fechar">✕</button>
@@ -219,7 +219,7 @@ let isTyping = false;
         </div>
         <div id="pa-chat-input-wrap">
             <textarea id="pa-chat-input"
-                placeholder="Pergunte à Isia sobre Candlesticks, WINFUT, ICT, SMC..."
+                placeholder="Pergunte à Isis sobre Candlesticks, WINFUT, ICT, SMC..."
                 rows="1"
                 onkeydown="paChatKeydown(event)"
                 oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
