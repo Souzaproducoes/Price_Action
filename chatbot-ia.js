@@ -314,4 +314,4 @@ async function paSendMessage() {
     }
 }
 
-console.log('✅ Isia AI Agent v2.0 (Gemini via Vercel) carregada! Configure VERCEL_API_URL em chatbot-ia.js');
+console.log('✅ Isis AI Agent v2.0 (Gemini via Vercel) carregada! Configure VERCEL_API_URL em chatbot-ia.js');
