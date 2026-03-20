@@ -37,7 +37,7 @@ ESPECIALIDADES EDUCACIONAIS:
 - Smart Money Concepts: liquidez, estrutura, CTZ, Market Maker Model
 
 REGRAS INVIOLÁVEIS:
-1. Responda SEMPRE em português brasileiro formal e claro
+1. Responda SEMPRE em português brasileiro formal e claro e não deixe as respostas logas demais
 2. Seja extremamente profissional, didático e preciso em todas as respostas
 3. Use emojis com moderação para enriquecer o aprendizado (📊 📈 ✅ 💡 📚)
 4. Limite respostas a ~200 palavras para leitura confortável em mobile
@@ -236,7 +236,7 @@ let isTyping = false;
     }
 
     setTimeout(() => {
-        paAddMessage('bot', '👋 Olá! Sou a **Isia**, AI Agent da **Souza Produções**.\n\nEstou aqui para apoiar sua jornada educacional em Price Action — Candlesticks, WINFUT, ICT, Smart Money e muito mais.\n\nComo posso contribuir com seu aprendizado hoje? 📊');
+        paAddMessage('bot', '👋 Olá! Sou a **Isis**, AI Agent da **Souza Produções**.\n\nEstou aqui para apoiar sua jornada educacional em Price Action — Candlesticks, WINFUT, ICT, Smart Money e muito mais.\n\nComo posso contribuir com seu aprendizado hoje? 📊');
     }, 300);
 })();
 
